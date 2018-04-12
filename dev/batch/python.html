@@ -1,0 +1,3451 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.2 Documentation: Python Programming Guide</title>
+    <link rel="shortcut icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/codetabs.css">
+    <link rel="stylesheet" href="/1.2.0/page/font-awesome/css/font-awesome.min.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          
+
+
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sidenav-logo">
+  <p><a href="/1.2.0"><img class="bottom" alt="Apache Flink" src="/1.2.0/page/img/navbar-brand-logo.jpg"></a> v1.2</p>
+</div>
+<ul id="sidenav">
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/index.html"><i class="fa fa-home title" aria-hidden="true"></i> 首页</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-2" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/concepts/programming-model.html">编程模型</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/concepts/runtime.html">Distributed Runtime</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/setup_quickstart.html"><i class="fa fa-power-off title appetizer" aria-hidden="true"></i> 快速起步</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-7" data-toggle="collapse"><i class="fa fa-file-code-o title appetizer" aria-hidden="true"></i> 示例 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-7"><ul>
+  <li><a href="/1.2.0/examples/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/run_example_quickstart.html">Monitoring Wikipedia Edits</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/examples.html">Batch Examples</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-11" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> 建立工程 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-11"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/java_api_quickstart.html">Java 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/scala_api_quickstart.html">Scala 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking_with_flink.html">Linking with Flink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/ide_setup.html">IDE Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_shell.html">Scala REPL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking.html">关联可选模块</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/flink_on_windows.html">Running Flink on Windows</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/building.html">Building Flink from Source</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-21" data-toggle="collapse" class="active"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</a><div class="collapse in" id="collapse-21"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-22" data-toggle="collapse">Basic API Concepts <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+  <li><a href="/1.2.0/dev/api_concepts.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_api_extensions.html">Scala API Extensions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/java8.html">Java 8</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-26" data-toggle="collapse">Streaming (DataStream API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-26"><ul>
+  <li><a href="/1.2.0/dev/datastream_api.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/dev/windows.html">Windows</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-28" data-toggle="collapse">Event Time <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+  <li><a href="/1.2.0/dev/event_time.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamps_watermarks.html">Generating Timestamps / Watermarks</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamp_extractors.html">预定义的 Timestamp Extractors / Watermark Emitters</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-32" data-toggle="collapse">Connectors <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-32"><ul>
+  <li><a href="/1.2.0/dev/connectors/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/guarantees.html">Fault Tolerance Guarantees</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kafka.html">Kafka</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/cassandra.html">Cassandra</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kinesis.html">Kinesis</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/filesystem_sink.html">Rolling File Sink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/nifi.html">NiFi</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/twitter.html">Twitter</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/process_function.html">过程函数</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/side_output.html">Side Outputs</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/state.html">Working with State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/checkpointing.html">Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/asyncio.html">Async I/O</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/queryable_state.html">Queryable State</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-50" data-toggle="collapse" class="active">批 (DataSet API)</a><div class="collapse in" id="collapse-50"><ul>
+  <li><a href="/1.2.0/dev/batch/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/dataset_transformations.html">Transformations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/iterations.html">Iterations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/fault_tolerance.html">Fault Tolerance</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/python.html" class="active">Python API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/connectors.html">Connectors</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/hadoop_compatibility.html">Hadoop Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/local_execution.html">Local Execution</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/cluster_execution.html">Cluster Execution</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-61" data-toggle="collapse">数据类型和序列化 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-61"><ul>
+  <li><a href="/1.2.0/dev/types_serialization.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/custom_serializers.html">Custom Serializers</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-64" data-toggle="collapse">Managing Execution <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-64"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_configuration.html">Execution Configuration</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/packaging.html">Program Packaging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/parallel.html">并行执行</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_plans.html">执行计划</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/restart_strategies.html">Restart Strategies</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-71" data-toggle="collapse">Libraries <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-71"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/table_api.html">Table and SQL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/cep.html">Event Processing (CEP)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/storm_compatibility.html">Storm Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-75" data-toggle="collapse">Graphs: Gelly <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-75"><ul>
+  <li><a href="/1.2.0/dev/libs/gelly/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_api.html">Graph API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/library_methods.html">Library Methods</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-83" data-toggle="collapse">机器学习 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-83"><ul>
+  <li><a href="/1.2.0/dev/libs/ml/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/quickstart.html">快速入门</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">多元线性回归</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/cross_validation.html">交叉验证</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/distance_metrics.html">距离度量</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/knn.html">K近邻算法（KNN）</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/min_max_scaler.html">最小最大值标准化</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/contribution_guide.html">贡献指南</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/pipelines.html">Pipelines</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/polynomial_features.html">多项式特征转换</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/als.html">ALS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/sos.html">Stochastic Outlier Selection</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/standard_scaler.html">标准化缩放</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/svm.html">支持向量机（SVM using CoCoA）</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/best_practices.html">Best Practices</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/migration.html">API Migration Guides</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-102" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> 部署与运维 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-102"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/setup/config.html">Configuration</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cli.html">CLI</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-105" data-toggle="collapse">Clusters & Deployment <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-105"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cluster_setup.html">Standalone Cluster</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/yarn_setup.html">YARN</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mesos.html">Mesos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/aws.html">AWS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/gce_setup.html">Google Compute Engine</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mapr_setup.html">MapR</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/jobmanager_high_availability.html">High Availability (HA)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/checkpoints.html">Checkpoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/savepoints.html">Savepoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/security-ssl.html">SSL Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/security-kerberos.html">Kerberos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/upgrading.html">Upgrading Applications and Flink Versions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/production_ready.html">生产环境检查清单</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-121" data-toggle="collapse"><i class="fa fa-bug title maindish" aria-hidden="true"></i> 调试与监控 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/metrics.html">Metrics</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/logging.html">Logging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/historyserver.html">History Server</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/checkpoint_monitoring.html">Monitoring Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/back_pressure.html">Monitoring Back Pressure</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/rest_api.html">Monitoring REST API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/large_state_tuning.html">Debugging and Tuning Checkpoints and Large State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_event_time.html">Debugging Windows & Event Time</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_classloading.html">Debugging Classloading</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/application_profiling.html">Application Profiling</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-133" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内部原理 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/components.html">Component Stack</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/task_lifecycle.html">Task Lifecycle</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/filesystems.html">File Systems</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+<li><a href="/1.2.0/about/index.html"><i class="fa fa-fire title hot" aria-hidden="true"></i> 参与贡献</a></li>
+    
+  
+
+  
+    
+      
+  <li class="divider"></li>
+  <li><a href="http://flink-china.org"><i class="fa fa-external-link title" aria-hidden="true"></i> 项目页面</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="/1.2.0/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="搜索文档">
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <li><a href="http://doc.flink-china.org/1.1.0/">v1.1</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+        </div>
+        <div class="col-lg-9 content">
+          
+
+          
+
+
+
+
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+
+
+
+<ol class="breadcrumb">
+
+  
+  
+    <li><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</li>
+  
+
+  
+  
+    <li><a href="/1.2.0/dev/batch/index.html">批 (DataSet API)</a></li>
+  
+
+  
+  
+    <li class="active">Python API</li>
+  
+
+</ol>
+
+<h1>Python Programming Guide <span class="beta">Beta</span></h1>
+
+
+
+<p>Flink中的分析程序实现了对数据集的某些操作 (例如，数据过滤，映射，合并，分组)。这些数据最初来源于特定的数据源(例如来自于读文件或数据集合)。操作执行的结果通过数据池以写入数据到(分布式)文件系统或标准输出(例如命令行终端)的形式返回。Flink程序可以运行在不同的环境中，既能够独立运行，也可以嵌入到其他程序中运行。程序可以运行在本地的JVM上，也可以运行在服务器集群中。</p>
+
+<p>为了创建你自己的Flink程序，我们鼓励你从<a href="#https://ci.apache.org/projects/flink/flink-docs-release-1.2/dev/batch/python.html#program-skeleton">program skeleton</a>（程序框架）开始，并逐渐增加你自己的<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.2/dev/batch/python.html#transformations">transformations</a>（变化）。以下是更多的用法和高级特性的索引。</p>
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">示例程序</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">程序框架</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">创建项目</a></li>
+  <li><a href="#section-3" id="markdown-toc-section-3">延迟(惰性)求值</a></li>
+  <li><a href="#section-4" id="markdown-toc-section-4">数据变换</a></li>
+  <li><a href="#keys" id="markdown-toc-keys">指定Keys</a></li>
+  <li><a href="#flink" id="markdown-toc-flink">向Flink传递函数</a></li>
+  <li><a href="#section-5" id="markdown-toc-section-5">数据类型</a></li>
+  <li><a href="#section-7" id="markdown-toc-section-7">数据源</a></li>
+  <li><a href="#section-8" id="markdown-toc-section-8">数据池</a></li>
+  <li><a href="#section-9" id="markdown-toc-section-9">广播变量</a></li>
+  <li><a href="#section-10" id="markdown-toc-section-10">并行执行</a>    <ul>
+      <li><a href="#section-11" id="markdown-toc-section-11">运行环境级</a></li>
+      <li><a href="#section-12" id="markdown-toc-section-12">系统级</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-13" id="markdown-toc-section-13">执行计划</a></li>
+</ul>
+
+<h2 id="section">示例程序</h2>
+
+<p>以下程序是一段完整可运行的WordCount示例程序。你可以复制粘贴这些代码并在本地运行。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flink.plan.Environment</span> <span class="kn">import</span> <span class="n">get_environment</span>
+<span class="kn">from</span> <span class="nn">flink.functions.GroupReduceFunction</span> <span class="kn">import</span> <span class="n">GroupReduceFunction</span>
+
+<span class="k">class</span> <span class="nc">Adder</span><span class="p">(</span><span class="n">GroupReduceFunction</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">collector</span><span class="p">):</span>
+    <span class="n">count</span><span class="p">,</span> <span class="n">word</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">])</span>
+    <span class="n">collector</span><span class="o">.</span><span class="n">collect</span><span class="p">((</span><span class="n">count</span><span class="p">,</span> <span class="n">word</span><span class="p">))</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">get_environment</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">from_elements</span><span class="p">(</span><span class="s">&quot;Who&#39;s there?&quot;</span><span class="p">,</span>
+ <span class="s">&quot;I think I hear them. Stand, ho! Who&#39;s there?&quot;</span><span class="p">)</span>
+
+<span class="n">data</span> \
+  <span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span> \
+  <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">reduce_group</span><span class="p">(</span><span class="n">Adder</span><span class="p">(),</span> <span class="n">combinable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">output</span><span class="p">()</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">local</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-1">程序框架</h2>
+
+<p>从示例程序可以看出，Flink程序看起来就像普通的python程序一样。每个程序都包含相同的基本组成部分：</p>
+
+<ol>
+  <li>获取一个<code>运行环境</code>，</li>
+  <li>加载/创建初始数据，</li>
+  <li>指定对这些数据的操作，</li>
+  <li>指定计算结果的存放位置，</li>
+  <li>运行程序。</li>
+</ol>
+
+<p>接下来，我们将对每个步骤给出概述，更多细节可以参考与之对应的小节。</p>
+
+<p><code>Environment</code>（运行环境）是所有Flink程序的基础。你可以通过调用<code>Environment</code>类中的一些静态方法来建立一个环境:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">get_environment</span><span class="p">()</span></code></pre></div>
+
+<p>运行环境可通过多种读文件的方式来指定数据源。如果是简单的按行读取文本文件，你可以采用:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">env</span> <span class="o">=</span> <span class="n">get_environment</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s">&quot;file:///path/to/file&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>这样，你就获得了可以进行操作（apply transformations）的数据集。关于数据源和输入格式的更多信息，请参考<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.2/dev/batch/python.html#data-sources">Data Sources</a>。</p>
+
+<p>一旦你获得了一个数据集DataSet，你就可以通过transformations来创建一个新的数据集，并把它写入到文件，再次transform，或者与其他数据集相结合。你可以通过对数据集调用自己个性化定制的函数来进行数据操作。例如，一个类似这样的数据映射操作：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span></code></pre></div>
+
+<p>这将会创建一个新的数据集，其中的每个数据都是原来数据集中的2倍。若要获取关于所有transformations的更多信息，及所有数据操作的列表，请参考<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.2/dev/batch/python.html#transformations">Transformations</a>。</p>
+
+<p>当你需要将所获得的数据集写入到磁盘时，调用下面三种函数的其中一个即可：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s">&quot;&lt;file-path&gt;&quot;</span><span class="p">,</span> <span class="n">WriteMode</span><span class="o">=</span><span class="n">Constants</span><span class="o">.</span><span class="n">NO_OVERWRITE</span><span class="p">)</span>
+<span class="n">write_csv</span><span class="p">(</span><span class="s">&quot;&lt;file-path&gt;&quot;</span><span class="p">,</span> <span class="n">line_delimiter</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">field_delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">write_mode</span><span class="o">=</span><span class="n">Constants</span><span class="o">.</span><span class="n">NO_OVERWRITE</span><span class="p">)</span>
+<span class="n">output</span><span class="p">()</span></code></pre></div>
+
+<p>其中，最后一种方法仅适用于在本机上进行开发/调试，它会将数据集的内容输出到标准输出。（请注意，当函数在集群上运行时，结果将会输出到整个集群节点的标准输出流，即输出到workers的.out文件。）前两种方法，能够将数据集写入到对应的文件中。关于写入到文件的更多信息，请参考 <a href="#data-sinks">Data Sinks</a>。</p>
+
+<p>当你设计好了程序之后，你需要在环境中执行 <code>execute</code> 命令来运行程序。可以选择在本机运行，也可以提交到集群运行，这取决于Flink的创建方式。你可以通过设置 <code>execute(local=True)</code> 强制程序在本机运行。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-2">创建项目</h2>
+
+<p>除了搭建好Flink运行环境，就无需进行其他准备工作了。Python包可以从你的Flink版本对应的 /resource 文件夹找到。在执行工作任务时，Flink包，plan包和optional包均可以通过HDFS自动分发。</p>
+
+<p>Python API已经在安装了Python2.7或3.4的Linux/Windows系统上测试过。</p>
+
+<p>默认情况下，Flink通过调用“python”或“python3”来启动python进程，这取决于使用了哪种启动脚本。通过在 flink-conf.yaml 中设置 “python.binary.python[2/3]”对应的值，来设定你所需要的启动方式。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-3">延迟(惰性)求值</h2>
+
+<p>所有的Flink程序都是延迟执行的。当程序的主函数执行时，数据的载入和操作并没有在当时发生。与此相反，每一个被创建出来的操作都被加入到程序的计划中。当程序环境中的某个对象调用了 <code>execute()</code> 函数时，这些操作才会被真正的执行。不论该程序是在本地运行还是集群上运行。</p>
+
+<p>延迟求值能够让你建立复杂的程序，并在Flink上以一个整体的计划单元来运行。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-4">数据变换</h2>
+
+<p>数据变换（Data transformations）可以将一个或多个数据集映射为一个新的数据集。程序能够将多种变换结合到一起来进行复杂的整合变换。</p>
+
+<p>该小节将概述各种可以实现的数据变换。<a href="dataset_transformations.html">transformations
+documentation</a>数据变换文档中，有关于所有数据变换和示例的全面介绍。</p>
+
+<p><br /></p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Transformation</th>
+      <th class="text-center">Description 变换描述</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><strong>Map</strong></td>
+      <td>
+        <p>输入一个元素，输出一个元素</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>FlatMap</strong></td>
+      <td>
+        <p>输入一个元素，输出0,1，或多个元素 </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span>
+  <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>MapPartition</strong></td>
+      <td>
+        <p> 通过一次函数调用实现并行的分割操作。该函数将分割变换作为一个”迭代器”，并且能够产生任意数量的输出值。每次分割变换的元素数量取决于变换的并行性和之前的操作结果。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">map_partition</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="n">value</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Filter</strong></td>
+      <td>
+        <p>对每一个元素，计算一个布尔表达式的值，保留函数计算结果为true的元素。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Reduce</strong></td>
+      <td>
+        <p>通过不断的将两个元素组合为一个，来将一组元素结合为一个单一的元素。这种缩减变换可以应用于整个数据集，也可以应用于已分组的数据集。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>ReduceGroup</strong></td>
+      <td>
+        <p>将一组元素缩减为1个或多个元素。缩减分组变换可以被应用于一个完整的数据集，或者一个分组数据集。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Adder</span><span class="p">(</span><span class="n">GroupReduceFunction</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">collector</span><span class="p">):</span>
+    <span class="n">count</span><span class="p">,</span> <span class="n">word</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>      
+    <span class="n">collector</span><span class="o">.</span><span class="n">collect</span><span class="p">((</span><span class="n">count</span><span class="p">,</span> <span class="n">word</span><span class="p">))</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">reduce_group</span><span class="p">(</span><span class="n">Adder</span><span class="p">())</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Aggregate</strong></td>
+      <td>
+        <p>对一个数据集包含所有元组的一个域，或者数据集的每个数据组，执行某项built-in操作(求和，求最小值，求最大值)。聚集变换可以被应用于一个完整的数据集，或者一个分组数据集。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># This code finds the sum of all of the values in the first field and the maximum of all of the values in the second field</span>
+<span class="n">data</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Aggregation</span><span class="o">.</span><span class="n">Sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">and_agg</span><span class="p">(</span><span class="n">Aggregation</span><span class="o">.</span><span class="n">Max</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># min(), max(), and sum() syntactic sugar functions are also available</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">and_agg</span><span class="p">(</span><span class="n">Aggregation</span><span class="o">.</span><span class="n">Max</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    
+      <td><strong>Join</strong></td>
+      <td>
+        J对两个数据集进行联合变换，将得到一个新的数据集，其中包含在两个数据集中拥有相等关键字的所有元素对。也可通过JoinFunction来把成对的元素变为单独的元素。关于join keys的更多信息请查看 <a href="#specifying-keys">keys</a> 。
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># In this case tuple fields are used as keys.</span>
+<span class="c"># &quot;0&quot; is the join field on the first tuple</span>
+<span class="c"># &quot;1&quot; is the join field on the second tuple.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">input1</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">equal_to</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    
+
+    <tr>
+      <td><strong>CoGroup</strong></td>
+      <td>
+        <p>The two-dimensional variant of the reduce operation. Groups each input on one or more
+        fields and then joins the groups. The transformation function is called per pair of groups.
+        See <a href="#specifying-keys">keys</a> on how to define coGroup keys.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data1</span><span class="o">.</span><span class="n">co_group</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">equal_to</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Cross</strong></td>
+      <td>
+        <p>计算两个输入数据集的笛卡尔乘积(向量叉乘)，得到所有元素对。也可通过CrossFunction实现将一对元素转变为一个单独的元素。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Union</strong></td>
+      <td>
+        <p>将两个数据集进行合并。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span></code></pre></div>
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>ZipWithIndex</strong></td>
+      <td>
+        <p>为数据组中的元素逐个分配连续的索引。了解更多信息，请参考 [Zip Elements Guide](zip_elements_guide.html#zip-with-a-dense-index).</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">zip_with_index</span><span class="p">()</span></code></pre></div>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="keys">指定Keys</h2>
+
+<p>一些变换（例如Join和CoGroup），需要在进行变换前，为作为输入参数的数据集指定一个关键字，而另一些变换（例如Reduce和GroupReduce），则允许在变换操作之前，对数据集根据某个关键字进行分组。</p>
+
+<p>数据集可通过如下方式分组：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">reduced</span> <span class="o">=</span> <span class="n">data</span> \
+  <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="o">&lt;</span><span class="n">define</span> <span class="n">key</span> <span class="n">here</span><span class="o">&gt;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">reduce_group</span><span class="p">(</span><span class="o">&lt;</span><span class="n">do</span> <span class="n">something</span><span class="o">&gt;</span><span class="p">)</span></code></pre></div>
+
+<p>Flink中的数据模型并不是基于键-值对。你无需将数据集整理为keys和values的形式。键是”虚拟的”：它们被定义为在真实数据之上，引导分组操作的函数。</p>
+
+<h3 class="no_toc" id="keys-1">为元组定义keys</h3>
+
+<p>最简单的情形是对一个数据集中的元组按照一个或多个域进行分组：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">reduced</span> <span class="o">=</span> <span class="n">data</span> \
+  <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">reduce_group</span><span class="p">(</span><span class="o">&lt;</span><span class="n">do</span> <span class="n">something</span><span class="o">&gt;</span><span class="p">)</span></code></pre></div>
+
+<p>数据集中的元组被按照第一个域分组。对于接下来的group-reduce函数，输入的数据组中，每个元组的第一个域都有相同的值。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span> \
+  <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="o">/*</span><span class="n">do</span> <span class="n">something</span><span class="o">*/</span><span class="p">)</span></code></pre></div>
+
+<p>在上面的例子中，数据集的分组基于第一个和第二个域形成的复合关键字，因此，reduce函数输入数据组中，每个元组两个域的值均相同。</p>
+
+<p>关于嵌套元组需要注意：如果你有一个使用了嵌套元组的数据集，指定 <code>group_by(&lt;index of tuple&gt;)</code> 操作，系统将把整个元组作为关键字使用。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="flink">向Flink传递函数</h2>
+
+<p>一些特定的操作需要采用用户自定义的函数，因此它们都接受lambda表达式和rich functions作为输入参数。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Filter</span><span class="p">(</span><span class="n">FilterFunction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">5</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Filter</span><span class="p">())</span></code></pre></div>
+
+<p>Rich functions可以将函数作为输入参数，允许使用broadcast-variables（广播变量），能够由init()函数参数化，是复杂函数的一个可考虑的实现方式。它们也是在reduce操作中，定义一个可选的<code>combine</code> 函数的唯一方式。</p>
+
+<p>Lambda表达式可以让函数在一行代码上实现，非常便捷。需要注意的是，如果某个操作会返回多个数值，则其使用的lambda表达式应当返回一个迭代器。（所有函数将接收一个collector输入 参数）。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-5">数据类型</h2>
+
+<p>Flink的Python API目前仅支持python中的基本数据类型(int,float,bool,string)以及byte arrays。</p>
+
+<p>运行环境对数据类型的支持，包括序列化器serializer，反序列化器deserializer，以及自定义类型的类。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">MyObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">i</span>
+
+
+<span class="k">class</span> <span class="nc">MySerializer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&quot;&gt;i&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyDeserializer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">read</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&quot;&gt;i&quot;</span><span class="p">,</span> <span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">MyObj</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+<span class="n">env</span><span class="o">.</span><span class="n">register_custom_type</span><span class="p">(</span><span class="n">MyObj</span><span class="p">,</span> <span class="n">MySerializer</span><span class="p">(),</span> <span class="n">MyDeserializer</span><span class="p">())</span></code></pre></div>
+
+<h4 id="section-6">元组/列表</h4>
+
+<p>你可以使用元组（或列表）来表示复杂类型。Python中的元组可以转换为Flink中的Tuple类型，它们包含数量固定的不同类型的域（最多25个）。每个域的元组可以是基本数据类型，也可以是其他的元组类型，从而形成嵌套元组类型。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">word_counts</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">from_elements</span><span class="p">((</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></code></pre></div>
+
+<p>当进行一些要求指定关键字的操作时，例如对数据记录进行分组或配对。通过设定关键字，可以非常便捷地指定元组中各个域的位置。你可以指定多个位置，从而实现复合关键字（更多信息，查阅 <a href="#transformations">Section Data Transformations</a>).</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">wordCounts</span> \
+    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">MyReduceFunction</span><span class="p">())</span></code></pre></div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-7">数据源</h2>
+
+<p>数据源创建了初始的数据集，包括来自文件，以及来自数据接口/集合两种方式。</p>
+
+<p>基于文件的：</p>
+
+<ul>
+  <li><code>read_text(path)</code> – 按行读取文件，并将每一行以String形式返回。</li>
+  <li><code>read_csv(path, type)</code> – 解析以逗号（或其他字符）划分数据域的文件。
+返回一个包含若干元组的数据集。支持基本的java数据类型作为字段类型。</li>
+</ul>
+
+<p>基于数据集合的：</p>
+
+<ul>
+  <li><code>from_elements(*args)</code> – 基于一系列数据创建一个数据集，包含所有元素。</li>
+  <li><code>generate_sequence(from, to)</code> – 按照指定的间隔，生成一系列数据。</li>
+</ul>
+
+<p><strong>例子</strong></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">env</span>  <span class="o">=</span> <span class="n">get_environment</span>
+
+\<span class="c"># read text file from local files system</span>
+<span class="n">localLiens</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s">&quot;file:#/path/to/my/textfile&quot;</span><span class="p">)</span>
+
+\<span class="c"># read text file from a HDFS running at nnHost:nnPort</span>
+<span class="n">hdfsLines</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s">&quot;hdfs://nnHost:nnPort/path/to/my/textfile&quot;</span><span class="p">)</span>
+
+\<span class="c"># read a CSV file with three fields, schema defined using constants defined in flink.plan.Constants</span>
+<span class="n">csvInput</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&quot;hdfs:///the/CSV/file&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">INT</span><span class="p">,</span> <span class="n">STRING</span><span class="p">,</span> <span class="n">DOUBLE</span><span class="p">))</span>
+
+\<span class="c"># create a set from some given elements</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">from_elements</span><span class="p">(</span><span class="s">&quot;Foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;foobar&quot;</span><span class="p">,</span> <span class="s">&quot;fubar&quot;</span><span class="p">)</span>
+
+\<span class="c"># generate a number sequence</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">generate_sequence</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">)</span></code></pre></div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-8">数据池</h2>
+
+<p>数据池可以接收数据集，并被用来存储或返回它们：</p>
+
+<ul>
+  <li><code>write_text()</code> – 按行以String形式写入数据。可通过对每个数据项调用str()函数获取String。</li>
+  <li><code>write_csv(...)</code> – 将元组写入逗号分隔数值文件。行数和数据字段均可配置。每个字段的值可通过对数据项调用str()方法得到。</li>
+  <li><code>output()</code>– 在标准输出上打印每个数据项的str()字符串。</li>
+</ul>
+
+<p>一个数据集可以同时作为多个操作的输入数据。程序可以在写入或打印一个数据集的同时，对其进行其他的变换操作。</p>
+
+<p><strong>例子</strong></p>
+
+<p>标准数据池相关方法示例如下：</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">write</span> <span class="nc">DataSet</span> <span class="n">to</span> <span class="n">a</span> <span class="n">file</span> <span class="n">on</span> <span class="n">the</span> <span class="n">local</span> <span class="n">file</span> <span class="n">system</span>
+<span class="n">textData</span><span class="o">.</span><span class="n">write_text</span><span class="o">(</span><span class="s">&quot;file:///my/result/on/localFS&quot;</span><span class="o">)</span>
+
+ <span class="n">write</span> <span class="nc">DataSet</span> <span class="n">to</span> <span class="n">a</span> <span class="n">file</span> <span class="n">on</span> <span class="n">a</span> <span class="nc">HDFS</span> <span class="k">with</span> <span class="n">a</span> <span class="n">namenode</span> <span class="n">running</span> <span class="n">at</span> <span class="n">nnHost</span><span class="k">:</span><span class="kt">nnPort</span>
+<span class="n">textData</span><span class="o">.</span><span class="n">write_text</span><span class="o">(</span><span class="s">&quot;hdfs://nnHost:nnPort/my/result/on/localFS&quot;</span><span class="o">)</span>
+
+ <span class="n">write</span> <span class="nc">DataSet</span> <span class="n">to</span> <span class="n">a</span> <span class="n">file</span> <span class="n">and</span> <span class="n">overwrite</span> <span class="n">the</span> <span class="n">file</span> <span class="k">if</span> <span class="n">it</span> <span class="n">exists</span>
+<span class="n">textData</span><span class="o">.</span><span class="n">write_text</span><span class="o">(</span><span class="s">&quot;file:///my/result/on/localFS&quot;</span><span class="o">,</span> <span class="nc">WriteMode</span><span class="o">.</span><span class="nc">OVERWRITE</span><span class="o">)</span>
+
+ <span class="n">tuples</span> <span class="n">as</span> <span class="n">lines</span> <span class="k">with</span> <span class="n">pipe</span> <span class="n">as</span> <span class="n">the</span> <span class="n">separator</span> <span class="s">&quot;a|b|c&quot;</span>
+<span class="n">values</span><span class="o">.</span><span class="n">write_csv</span><span class="o">(</span><span class="s">&quot;file:///path/to/the/result/file&quot;</span><span class="o">,</span> <span class="n">line_delimiter</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="o">,</span> <span class="n">field_delimiter</span><span class="o">=</span><span class="s">&quot;|&quot;</span><span class="o">)</span>
+
+ <span class="k">this</span> <span class="n">writes</span> <span class="n">tuples</span> <span class="n">in</span> <span class="n">the</span> <span class="n">text</span> <span class="n">formatting</span> <span class="s">&quot;(a, b, c)&quot;</span><span class="o">,</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">as</span> <span class="nc">CSV</span> <span class="n">lines</span>
+<span class="n">values</span><span class="o">.</span><span class="n">write_text</span><span class="o">(</span><span class="s">&quot;file:///path/to/the/result/file&quot;</span><span class="o">)</span></code></pre></div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-9">广播变量</h2>
+
+<p>使用广播变量，能够在使用普通输入参数的基础上，使得一个数据集同时被多个并行的操作所使用。这对于实现辅助数据集，或者是基于数据的参数化法非常有用。这样，数据集就可以以集合的形式被访问。</p>
+
+<ul>
+  <li><strong>Broadcast</strong>: 注册广播变量，广播数据集可通过调用<code>with_broadcast_set(DataSet, String)</code>函数，按照名字注册广播变量</li>
+  <li><strong>Access</strong>：访问广播变量，通过对调用<code>self.context.get_broadcast_variable(String)</code>可获取广播变量。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">MapperBcv</span><span class="p">(</span><span class="n">MapFunction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get_broadcast_variable</span><span class="p">(</span><span class="s">&quot;bcv&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="n">factor</span>
+
+<span class="c"># 1. The DataSet to be broadcasted</span>
+<span class="n">toBroadcast</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">from_elements</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">from_elements</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
+
+<span class="c"># 2. Broadcast the DataSet</span>
+<span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">MapperBcv</span><span class="p">())</span><span class="o">.</span><span class="n">with_broadcast_set</span><span class="p">(</span><span class="s">&quot;bcv&quot;</span><span class="p">,</span> <span class="n">toBroadcast</span><span class="p">)</span></code></pre></div>
+
+<p>确保在进行广播变量的注册和访问时，应当采用相同的名字（示例中的<code>bcv</code>）。</p>
+
+<p><strong>提示</strong>：由于广播变量的内容被保存在每个节点的内部存储中，不适合包含过多内容。一些简单的参数，例如标量值，可简单地通过参数化rich function来实现。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-10">并行执行</h2>
+
+<p>This section describes how the parallel execution of programs can be configured in Flink. A Flink
+program consists of multiple tasks (operators, data sources, and sinks). A task is split into
+several parallel instances for execution and each parallel instance processes a subset of the task’s
+input data. The number of parallel instances of a task is called its <em>parallelism</em> or <em>degree of
+parallelism (DOP)</em>.</p>
+
+<p>The degree of parallelism of a task can be specified in Flink on different levels.</p>
+
+<p>该章节将描述如何在Flink中配置程序的并行执行。一个Flink程序可以包含多个任务（操作，数据源和数据池）。一个任务可以被划分为多个可并行运行的部分，每个部分处理输入数据的一个子集。并行运行的实例数量被称作它的 <em>并行性</em> 或 <em>并行度</em>（<em>degree of parallelism (DOP)</em>）。</p>
+
+<p>在Flink中可以为任务指定不同等级的并行度。</p>
+
+<h3 id="section-11">运行环境级</h3>
+
+<p>Flink程序可在一个运行环境 <a href="#program-skeleton">execution environment</a>的上下文中运行。一个运行环境为其中运行的所有操作，数据源和数据池定义了一个默认的并行度。运行环境的并行度可通过对某个操作的并行度进行配置来修改。</p>
+
+<p>一个运行环境的并行度可通过调用 <code>set_parallelism()</code> 方法来指定。例如，为了将 <a href="#example-program">WordCount</a> 示例程序中的所有操作，数据源和数据池的并行度设置为 <code>3</code> ，可以通过如下方式设置运行环境的默认并行度：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">env</span> <span class="o">=</span> <span class="n">get_environment</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">set_parallelism</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">text</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> \
+    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">reduce_group</span><span class="p">(</span><span class="n">Adder</span><span class="p">(),</span> <span class="n">combinable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">output</span><span class="p">()</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></code></pre></div>
+
+<h3 id="section-12">系统级</h3>
+
+<p>通过设置位于 <code>./conf/flink-conf.yaml</code> 文件的 <code>parallelism.default</code> 属性，改变系统级的默认并行度，可设置所有运行环境的默认并行度。具体细节可查阅 <a href="/1.2.0/setup/config.html">Configuration</a> 文档。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-13">执行计划</h2>
+
+<p>To run the plan with Flink, go to your Flink distribution, and run the pyflink.sh script from the /bin folder.
+The script containing the plan has to be passed as the first argument, followed by a number of additional python
+packages, and finally, separated by - additional arguments that will be fed to the script.</p>
+
+<p>为了在Flink中运行计划任务，到Flink目录下，运行<code>/bin</code>文件夹下的 <code>pyflink.sh</code> 脚本。包含计划任务的脚本应当作为第一个输入参数，其后可添加一些另外的python包，最后，在“-”之后，输入其他附加参数。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">./</span><span class="nb">bin</span><span class="o">/</span><span class="n">pyflink</span><span class="o">.</span><span class="n">sh</span> <span class="o">&lt;</span><span class="n">Script</span><span class="o">&gt;</span><span class="p">[</span> <span class="o">&lt;</span><span class="n">pathToPackage1</span><span class="o">&gt;</span><span class="p">[</span> <span class="o">&lt;</span><span class="n">pathToPackageX</span><span class="p">]][</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">param1</span><span class="o">&gt;</span><span class="p">[</span> <span class="o">&lt;</span><span class="n">paramX</span><span class="o">&gt;</span><span class="p">]]</span></code></pre></div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+
+ <div class="footer">
+  发现错误？想参与编辑？
+  <a href="https://github.com/flink-china/flink-china-doc/edit/1.2.0/dev/batch/python.md" target="_blank">
+    在 Github 上编辑此页！
+  </a>
+</div>
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.2.0/page/js/flink.js"></script>
+
+   <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

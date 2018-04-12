@@ -1,0 +1,3310 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.2 Documentation: 探究管道方法（pipeline）</title>
+    <link rel="shortcut icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/codetabs.css">
+    <link rel="stylesheet" href="/1.2.0/page/font-awesome/css/font-awesome.min.css">
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']] },
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" } }
+        });
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          
+
+
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sidenav-logo">
+  <p><a href="/1.2.0"><img class="bottom" alt="Apache Flink" src="/1.2.0/page/img/navbar-brand-logo.jpg"></a> v1.2</p>
+</div>
+<ul id="sidenav">
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/index.html"><i class="fa fa-home title" aria-hidden="true"></i> 首页</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-2" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/concepts/programming-model.html">编程模型</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/concepts/runtime.html">Distributed Runtime</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/setup_quickstart.html"><i class="fa fa-power-off title appetizer" aria-hidden="true"></i> 快速起步</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-7" data-toggle="collapse"><i class="fa fa-file-code-o title appetizer" aria-hidden="true"></i> 示例 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-7"><ul>
+  <li><a href="/1.2.0/examples/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/run_example_quickstart.html">Monitoring Wikipedia Edits</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/examples.html">Batch Examples</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-11" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> 建立工程 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-11"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/java_api_quickstart.html">Java 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/scala_api_quickstart.html">Scala 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking_with_flink.html">Linking with Flink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/ide_setup.html">IDE Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_shell.html">Scala REPL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking.html">关联可选模块</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/flink_on_windows.html">Running Flink on Windows</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/building.html">Building Flink from Source</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-21" data-toggle="collapse" class="active"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</a><div class="collapse in" id="collapse-21"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-22" data-toggle="collapse">Basic API Concepts <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+  <li><a href="/1.2.0/dev/api_concepts.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_api_extensions.html">Scala API Extensions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/java8.html">Java 8</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-26" data-toggle="collapse">Streaming (DataStream API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-26"><ul>
+  <li><a href="/1.2.0/dev/datastream_api.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/dev/windows.html">Windows</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-28" data-toggle="collapse">Event Time <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+  <li><a href="/1.2.0/dev/event_time.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamps_watermarks.html">Generating Timestamps / Watermarks</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamp_extractors.html">预定义的 Timestamp Extractors / Watermark Emitters</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-32" data-toggle="collapse">Connectors <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-32"><ul>
+  <li><a href="/1.2.0/dev/connectors/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/guarantees.html">Fault Tolerance Guarantees</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kafka.html">Kafka</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/cassandra.html">Cassandra</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kinesis.html">Kinesis</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/filesystem_sink.html">Rolling File Sink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/nifi.html">NiFi</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/twitter.html">Twitter</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/process_function.html">过程函数</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/side_output.html">Side Outputs</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/state.html">Working with State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/checkpointing.html">Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/asyncio.html">Async I/O</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/queryable_state.html">Queryable State</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-50" data-toggle="collapse">批 (DataSet API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-50"><ul>
+  <li><a href="/1.2.0/dev/batch/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/dataset_transformations.html">Transformations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/iterations.html">Iterations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/fault_tolerance.html">Fault Tolerance</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/python.html">Python API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/connectors.html">Connectors</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/hadoop_compatibility.html">Hadoop Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/local_execution.html">Local Execution</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/cluster_execution.html">Cluster Execution</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-61" data-toggle="collapse">数据类型和序列化 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-61"><ul>
+  <li><a href="/1.2.0/dev/types_serialization.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/custom_serializers.html">Custom Serializers</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-64" data-toggle="collapse">Managing Execution <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-64"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_configuration.html">Execution Configuration</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/packaging.html">Program Packaging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/parallel.html">并行执行</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_plans.html">执行计划</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/restart_strategies.html">Restart Strategies</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-71" data-toggle="collapse" class="active">Libraries</a><div class="collapse in" id="collapse-71"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/table_api.html">Table and SQL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/cep.html">Event Processing (CEP)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/storm_compatibility.html">Storm Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-75" data-toggle="collapse">Graphs: Gelly <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-75"><ul>
+  <li><a href="/1.2.0/dev/libs/gelly/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_api.html">Graph API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/library_methods.html">Library Methods</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-83" data-toggle="collapse" class="active">机器学习</a><div class="collapse in" id="collapse-83"><ul>
+  <li><a href="/1.2.0/dev/libs/ml/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/quickstart.html">快速入门</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">多元线性回归</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/cross_validation.html">交叉验证</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/distance_metrics.html">距离度量</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/knn.html">K近邻算法（KNN）</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/min_max_scaler.html">最小最大值标准化</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/contribution_guide.html">贡献指南</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/pipelines.html" class="active">Pipelines</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/polynomial_features.html">多项式特征转换</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/als.html">ALS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/sos.html">Stochastic Outlier Selection</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/standard_scaler.html">标准化缩放</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/svm.html">支持向量机（SVM using CoCoA）</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/best_practices.html">Best Practices</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/migration.html">API Migration Guides</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-102" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> 部署与运维 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-102"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/setup/config.html">Configuration</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cli.html">CLI</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-105" data-toggle="collapse">Clusters & Deployment <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-105"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cluster_setup.html">Standalone Cluster</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/yarn_setup.html">YARN</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mesos.html">Mesos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/aws.html">AWS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/gce_setup.html">Google Compute Engine</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mapr_setup.html">MapR</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/jobmanager_high_availability.html">High Availability (HA)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/checkpoints.html">Checkpoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/savepoints.html">Savepoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/security-ssl.html">SSL Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/security-kerberos.html">Kerberos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/upgrading.html">Upgrading Applications and Flink Versions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/production_ready.html">生产环境检查清单</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-121" data-toggle="collapse"><i class="fa fa-bug title maindish" aria-hidden="true"></i> 调试与监控 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/metrics.html">Metrics</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/logging.html">Logging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/historyserver.html">History Server</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/checkpoint_monitoring.html">Monitoring Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/back_pressure.html">Monitoring Back Pressure</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/rest_api.html">Monitoring REST API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/large_state_tuning.html">Debugging and Tuning Checkpoints and Large State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_event_time.html">Debugging Windows & Event Time</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_classloading.html">Debugging Classloading</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/application_profiling.html">Application Profiling</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-133" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内部原理 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/components.html">Component Stack</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/task_lifecycle.html">Task Lifecycle</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/filesystems.html">File Systems</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+<li><a href="/1.2.0/about/index.html"><i class="fa fa-fire title hot" aria-hidden="true"></i> 参与贡献</a></li>
+    
+  
+
+  
+    
+      
+  <li class="divider"></li>
+  <li><a href="http://flink-china.org"><i class="fa fa-external-link title" aria-hidden="true"></i> 项目页面</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="/1.2.0/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="搜索文档">
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <li><a href="http://doc.flink-china.org/1.1.0/">v1.1</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+        </div>
+        <div class="col-lg-9 content">
+          
+          
+
+<!--Some of the Latex math notation has been adapted from Apache Spark MLlib's documentation-->
+$$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\av}{\mathbf{\alpha}}
+\newcommand{\bv}{\mathbf{b}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\id}{\mathbf{I}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\unit}{\mathbf{e}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand\rfrac[2]{^{#1}\!/_{#2}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+$$
+          
+
+          
+
+
+
+
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+
+
+
+<ol class="breadcrumb">
+
+  
+  
+    <li><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</li>
+  
+
+  
+  
+    <li>Libraries</li>
+  
+
+  
+  
+    <li><a href="/1.2.0/dev/libs/ml/index.html">机器学习</a></li>
+  
+
+  
+  
+    <li class="active">Pipelines</li>
+  
+
+</ol>
+
+<h1>探究管道方法（pipeline）</h1>
+
+
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">简介</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">“是什么” 和 “为什么”</a></li>
+  <li><a href="#flinkml--pipelines" id="markdown-toc-flinkml--pipelines">FlinkML 中的 Pipelines</a>    <ul>
+      <li><a href="#scala-" id="markdown-toc-scala-">Scala 的隐式</a></li>
+      <li><a href="#section-2" id="markdown-toc-section-2">操作</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">链接</a></li>
+      <li><a href="#pipeline-" id="markdown-toc-pipeline-">如何实现一个 Pipeline 操作</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">简介</h2>
+
+<p>把 transformer 和 predictor 链接起来的能力对任何机器学习库都是一个非常重要的特性。在 FlinkML 中，我们希望在提供一个直观的API的同时，能够充分利用 Scala 语言的能力来为我们的 pipelines 提供类型安全的实现。我们希望能够实现的是让API的使用变得简单轻松，让使用者在工作开始运行之前避免类型错误，并且消除在需要长期运行的工作提交后由于数据转换操作错误引起的失败情形，而这类错误在机器学习 pipeline 中是经常发生的。</p>
+
+<p>在本指南中，我们将会描述在 FlinkML 中实现可链接的 transformers 和 predictors 时所采用的选择，并且为开发人员提供关于如何充分使用 pipeline 特性来创建自己的算法的指导。</p>
+
+<h2 id="section-1">“是什么” 和 “为什么”</h2>
+
+<p>机器学习中的 pipeline 是什么？在讨论机器学习时，pipeline 可以认为是一系列操作的链接，这些操作以某些数据作为输入，再对这些输入数据进行转换操作，最后输出转换之后的数据，这些转换后的数据既可以被用作 predictor 函数，比如一个学习模型，的输入（特征），也可以仅仅作为被某些其它任务所使用的输出。终端 learner 当然也可以作为 pipeline 的一部分。机器学习中的 pipeline 通常是复杂的操作集合(<a href="http://research.google.com/pubs/pub43146.html">深入解释</a>)，并且可以作为终端对终端学习系统的错误源。</p>
+
+<p>机器学习中 pipeline 的目的是创建一个可以管理由操作链引起的复杂问题的框架。Pipeline 应让开发人员能简易地定义使用在训练数据上的转换操作链，这样才能创建训练学习模型时所需的终端特性 (end features)，并且对没有标签的（测试）数据简易地执行相同的转换操作集。Pipelines 也应简化在这些操作链上进行的交叉验证的模型选择。</p>
+
+<p>最后，pipeline 中的链是连贯相扣的，我们通过确保这些连贯的链能”前后匹配”来避免高代价的类型错误。因为 pipline 中的每一步都可能是计算量繁重的操作，所以我们只有在确定 pipeline 中所有的输入/输出对都能”匹配”时，才会运行一个 pipeline 工作。</p>
+
+<h2 id="flinkml--pipelines">FlinkML 中的 Pipelines</h2>
+
+<p>FlinkML 中的 pipeline 构建模块请参阅 <code>ml.pipeline</code> 包。FlinkML 的 API 受 <a href="http://scikit-learn.org">sklearn</a> 启发，这意味着我们有 <code>Estimator</code>, <code>Transformer</code> 和 <code>Predictor</code> 三个接口。想要更加深入地了解 sklearn API 是如何设计的读者，请参阅 <a href="http://arxiv.org/abs/1309.0238">此</a> 论文。简单地说，<code>Estimator</code> 作为基类被<code>Transformer</code> 和 <code>Predictor</code>继承。<code>Estimator</code> 中定义了一个 <code>fit</code> 方法，<code>Transformer</code> 中定了一个 <code>transform</code> 方法，而 <code>Predictor</code> 中定义了一个<code>predict</code> 方法。</p>
+
+<p><code>Estimator</code> 中的 <code>fit</code> 方法对模型进行实质上的训练，比如在一个线性回归任务中找到合适的权重，或者在特征缩放中找到正确的平均值和标准差。对于 <code>Transformer</code>, 正如其名所示，任何实现了 <code>Transformer</code> 的类都可以实行转换操作，比如 <a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">复线性回归</a>。<code>Predictor</code> 的实现类可以学习算法，比如 <a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">复线性回归</a>。Pipeline 可以通过链接若干个 Transformers 创建，pipeline 中的最后一环可以是一个 Predictor 或者是 Transformer，如果一个 pipeline 以 Predictor 结束, 则无法进行下一步链接。下面的例子展示如何构建一个 pipeline:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 训练数据</span>
+<span class="k">val</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">LabeledVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="c1">// 测试数据</span>
+<span class="k">val</span> <span class="n">unlabeled</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Vector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">scaler</span> <span class="k">=</span> <span class="nc">StandardScaler</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">polyFeatures</span> <span class="k">=</span> <span class="nc">PolynomialFeatures</span><span class="o">()</span>
+<span class="k">val</span> <span class="n">mlr</span> <span class="k">=</span> <span class="nc">MultipleLinearRegression</span><span class="o">()</span>
+
+<span class="c1">// 构建 pipeline</span>
+<span class="k">val</span> <span class="n">pipeline</span> <span class="k">=</span> <span class="n">scaler</span>
+  <span class="o">.</span><span class="n">chainTransformer</span><span class="o">(</span><span class="n">polyFeatures</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">chainPredictor</span><span class="o">(</span><span class="n">mlr</span><span class="o">)</span>
+
+<span class="c1">// 训练 pipeline (StandardScaler 和 MultipleLinearRegression)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">input</span><span class="o">)</span>
+
+<span class="c1">// 对测试集进行预测</span>
+<span class="k">val</span> <span class="n">predictions</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">LabeledVector</span><span class="o">]</span> <span class="k">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="o">(</span><span class="n">unlabeled</span><span class="o">)</span></code></pre></div>
+
+<p>正如我们提到的，FlinkML 的 pipeline 是类型安全的。
+如果我们尝试把输出类型为 <code>A</code> 的 transformer 链接到另一个输入类型为 <code>B</code> 的 transformer，若 <code>A</code> != <code>B</code> 我们会在编译时得到一个错误。FlinkML 中这种类型安全是通过 Scala 语言的隐式特性实现的。</p>
+
+<h3 id="scala-">Scala 的隐式</h3>
+
+<p>如果你对 Scala 语言的隐式特性不熟悉，我们推荐 <a href="https://www.artima.com/pins1ed/implicit-conversions-and-parameters.html">这篇摘录</a>，此摘录取自 Martin Odersky 的 “Programming in Scala”。 简单地说，Scala 中的隐式转换通过一个类型到另一个类型的转换来允许特定的多态，而隐式值则通过隐式参数为编译器提供默认值，这些值可在函数调用时被使用。隐式转换和隐式参数的组合让 transform 和 predict 操作能用类型安全的方式得以实现。</p>
+
+<h3 id="section-2">操作</h3>
+
+<p>正如我们提到的，<code>Estimator</code> 特质（抽象类）定义了一个 <code>fit</code> 方法。该方法有两个参数列表 (i.e. 是一个<a href="http://docs.scala-lang.org/tutorials/tour/currying.html">柯里化函数</a>)。第一个参数列表接收输入（训练）集 <code>DataSet</code> 和提供给 estimator 的参数。第二个参数列表接收一个 <code>implicit</code>（隐式）参数，该参数的类型是 <code>FitOperation</code>。<code>FitOperation</code> 也是一个定义了 <code>fit</code> 方法的类，该方法应实现具体的 estimator 训练的实际逻辑。<code>Estimator</code> 中的 <code>fit</code> 方法本质上是一个 <code>FitOperation</code> 中的 <code>fit</code> 方法的包装。同理，<code>Predictor</code> 的 <code>predict</code> 方法和 <code>transform</code> 的 <code>Transform</code> 方法也通过各自的操作类(operation class)，用相似的方法设计。</p>
+
+<p>这些方法中的操作对象(operation object)均由隐式参数提供。Scala 会在一个类型的伴生对象中<a href="http://docs.scala-lang.org/tutorials/FAQ/finding-implicits.html">寻找该隐式</a>，因此所有实现了这些接口的类应在其伴生对象中，以隐式对象的形式提供这些对象。</p>
+
+<p>举个例子，我们可以查看 <code>StandardScaler</code> 类。<code>StandardScaler</code> 继承了 <code>Transformer</code>，所以它能调用 <code>fit</code> 和 <code>transform</code> 方法，这两个方法需要 <code>FitOperation</code> 和 <code>TransformOperation</code> 作为隐式参数，分别给 <code>fit</code> 和 <code>transform</code> 方法。 这两个隐式参数在 <code>StandardScaler</code> 的伴生对象中通过 <code>transformVectors</code> and <code>fitVectorStandardScaler</code> 提供：</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">StandardScaler</span> <span class="k">extends</span> <span class="nc">Transformer</span><span class="o">[</span><span class="kt">StandardScaler</span><span class="o">]</span> <span class="o">{</span>
+  <span class="o">...</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">StandardScaler</span> <span class="o">{</span>
+
+  <span class="o">...</span>
+
+  <span class="k">implicit</span> <span class="k">def</span> <span class="n">fitVectorStandardScaler</span><span class="o">[</span><span class="kt">T</span> <span class="k">&lt;:</span> <span class="kt">Vector</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FitOperation</span><span class="o">[</span><span class="kt">StandardScaler</span>, <span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+    <span class="k">override</span> <span class="k">def</span> <span class="n">fit</span><span class="o">(</span><span class="n">instance</span><span class="k">:</span> <span class="kt">StandardScaler</span><span class="o">,</span> <span class="n">fitParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span><span class="o">,</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span>
+      <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="o">...</span>
+      <span class="o">}</span>
+
+  <span class="k">implicit</span> <span class="k">def</span> <span class="n">transformVectors</span><span class="o">[</span><span class="kt">T</span> <span class="k">&lt;:</span> <span class="kt">Vector:</span> <span class="kt">VectorConverter:</span> <span class="kt">TypeInformation:</span> <span class="kt">ClassTag</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">new</span> <span class="nc">TransformOperation</span><span class="o">[</span><span class="kt">StandardScaler</span>, <span class="kt">T</span>, <span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+        <span class="k">override</span> <span class="k">def</span> <span class="n">transform</span><span class="o">(</span>
+          <span class="n">instance</span><span class="k">:</span> <span class="kt">StandardScaler</span><span class="o">,</span>
+          <span class="n">transformParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span><span class="o">,</span>
+          <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span>
+        <span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+          <span class="o">...</span>
+        <span class="o">}</span>
+
+<span class="o">}</span></code></pre></div>
+
+<p>注意到 <code>StandardScaler</code> 并<strong>不会</strong>覆写 <code>Estimator</code> 中的 <code>fit</code> 方法或 <code>transform</code> 中的 <code>Transformer</code> 方法。 而它对 <code>FitOperation</code> 和 <code>TransformOperation</code> 的实现复写他们各自的 <code>fit</code> 和 <code>transform</code> 方法, 这两个方法分别被 <code>Estimator</code> 的 <code>fit</code> and <code>Transformer</code> 的 <code>transform</code> 方法调用。 相似地, 一个实现了 <code>Predictor</code> 的类应在它的伴生对象内定义一个隐式 <code>PredictOperation</code> 对象。</p>
+
+<h4 id="section-3">类型和类型安全</h4>
+
+<p>除了我们上面所列出的 <code>fit</code> 和 <code>transform</code> 操作，<code>StandardScaler</code> 还为 <code>LabeledVector</code> 类的输入提供了 <code>fit</code> 和 <code>transform</code> 操作。这允许我们在输入是有标签或没标签时都能使用该算法，并且会根据我们所给的输入的类型，无论要进行拟合操作还是转换操作，自动使用。编译器会根据输入的类型选择正确的隐式操作。</p>
+
+<p>如果我们尝试在调用 <code>fit</code> 或 <code>transform</code> 方法时使用不支持的类型，我们会在工作开始前获得一个运行时错误。尽管这些错误也有可能在编译时就被捕获，但是我们能够提供给使用者的错误信息所含的信息量就少得多，因此我们选择在运行时抛出异常。</p>
+
+<h3 id="section-4">链接</h3>
+
+<p>链接是通过调用实现了 <code>Transformer</code> 的类的对象中的 <code>chainTransformer</code> 或 <code>chainPredictor</code>来实现。这些方法分别返回一个 <code>ChainedTransformer</code> 或 <code>ChainedPredictor</code> 对象。正如我们提到的，<code>ChainedTransformer</code> 对象能够进行进一步的链接，而 <code>ChainedPredictor</code> 对象则不可以。这些类对由一连窜或一个 transformer 和 一个 predictor 组成的搭配进行拟合 (fit)，转换 (transform) 和预测 (predict) 操作。如果连接的长度大于二，他们会递归地运行，因为每个 <code>ChainedTransformer</code> 都定义了一个可以与更多 transformer  或一个 predictor 进行链接的<code>transform</code> 和 <code>fit</code> 方法。</p>
+
+<p>重要的一点是，开发人员和使用者在实现他们的算法时不需要考虑链接问题，所有的链接问题都会被 FlinkML 自动处理。</p>
+
+<h3 id="pipeline-">如何实现一个 Pipeline 操作</h3>
+
+<p>为了支持 FlinkML 中的管道操作 (pipelining)，算法必须遵循一个设计模式，我们会在这一章节描述该设计模式。
+假设我们希望想要实现一个 pipeline 操作，该操作能改变你所提供的数据的平均值。由于居中数据 (centering data) 在许多分析管道 (pipeline) 中是一个常用的预处理步骤，我们将以一个 <code>Transformer</code> 的形式实现它。因此我们首先创建一个 <code>MeanTransformer</code> 类，该类继承 <code>Transformer</code>。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">MeanTransformer</span> <span class="k">extends</span> <span class="nc">Transformer</span><span class="o">[</span><span class="kt">MeanTransformer</span><span class="o">]</span> <span class="o">{}</span></code></pre></div>
+
+<p>因为我们希望能配置作为结果的数据的平均值，所以我们必须加一个配置参数。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">MeanTransformer</span> <span class="k">extends</span> <span class="nc">Transformer</span><span class="o">[</span><span class="kt">MeanTransformer</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">setMean</span><span class="o">(</span><span class="n">mean</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">this.</span><span class="k">type</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">MeanTransformer</span><span class="o">.</span><span class="nc">Mean</span><span class="o">,</span> <span class="n">mean</span><span class="o">)</span>
+    <span class="k">this</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">MeanTransformer</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="k">object</span> <span class="nc">Mean</span> <span class="k">extends</span> <span class="nc">Parameter</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="o">{</span>
+    <span class="k">override</span> <span class="k">val</span> <span class="n">defaultValue</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mf">0.0</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">apply</span><span class="o">()</span><span class="k">:</span> <span class="kt">MeanTransformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MeanTransformer</span>
+<span class="o">}</span></code></pre></div>
+
+<p>参数被定义在 transformer 类的伴生对象中，并且继承了 <code>Parameter</code> 类。因为对于参数映射，参数实例应作为不可变的键，因此它以 <code>case objects</code> (样本对象) 的形式实现。如果用户没有设置其它的值，默认值就会被使用。如果默认值没有指明，意味着 <code>defaultValue = None</code>， 该算法需要根据情况进行处理。</p>
+
+<p>我们现在实例化一个 <code>MeanTransformer</code> 对象，并且设置平均值为 t。rmed data。
+但是我们仍然需要实现 transformation 是如何工作的。
+该工作流可以被分成两个阶段。
+在第一个阶段里，transformer 学习给定的训练数据的平均值。
+这个知识可以在第二个阶段中被用来转换被提供的且与被配置作为结果的平均值有关的数据。</p>
+
+<p>平均值的学习能够通过我们 <code>Transformer</code> 中，从 <code>Estimator</code> 继承而来的 <code>fit</code> 操作实现。
+在 <code>fit</code> 操作中，一个与给定的训练数据有关的 pipeline 组件被训练。
+然而，该算法<strong>不是</strong>通过覆写 <code>fit</code> 方法实现，而是通过提供一个与正确类型对应的一个 <code>FitOperation</code> 来实现。
+通过查看 <code>Transformer</code> 的父类 <code>Estimator</code> 的 <code>fit</code> 方法的定义，了解为什么是这种情况。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">Estimator</span><span class="o">[</span><span class="kt">Self</span><span class="o">]</span> <span class="nc">extends</span> <span class="nc">WithParameters</span> <span class="k">with</span> <span class="nc">Serializable</span> <span class="o">{</span>
+  <span class="n">that</span><span class="k">:</span> <span class="kt">Self</span> <span class="o">=&gt;</span>
+
+  <span class="k">def</span> <span class="n">fit</span><span class="o">[</span><span class="kt">Training</span><span class="o">](</span>
+      <span class="n">training</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Training</span><span class="o">],</span>
+      <span class="n">fitParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span> <span class="o">=</span> <span class="nc">ParameterMap</span><span class="o">.</span><span class="nc">Empty</span><span class="o">)</span>
+      <span class="o">(</span><span class="k">implicit</span> <span class="n">fitOperation</span><span class="k">:</span> <span class="kt">FitOperation</span><span class="o">[</span><span class="kt">Self</span>, <span class="kt">Training</span><span class="o">])</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="nc">FlinkMLTools</span><span class="o">.</span><span class="n">registerFlinkMLTypes</span><span class="o">(</span><span class="n">training</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">)</span>
+    <span class="n">fitOperation</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">fitParameters</span><span class="o">,</span> <span class="n">training</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>我们发现 <code>fit</code> 方法调用时需要一个 <code>Training</code> 类型的输入集，一个可选参数列表，和第二个带一个 <code>FitOperation</code> 类隐式参数的参数列表
+在方法体中，首先某个机器学习类型被注册，接着 <code>FitOperation</code> 参数的 <code>fit</code> 方法被调用。
+该实例把自身，参数映射和训练数据集作为一个参数提供给方法。
+因此，所有的程序逻辑发生在 <code>FitOperation</code>。</p>
+
+<p><code>FitOperation</code> 有两类参数。
+第一个定义了需要 <code>FitOperation</code> 为之工作的 pipeline 操作类型，而第二个类型参数定义了数据集元素的类型。
+如果我们希望先实现 <code>MeanTransformer</code>， 使之能工作在 <code>DenseVector</code> 上，我们则需要为 <code>FitOperation[MeanTransformer, DenseVector]</code> 提供一个实现。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">denseVectorMeanFitOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FitOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">fit</span><span class="o">(</span><span class="n">instance</span><span class="k">:</span> <span class="kt">MeanTransformer</span><span class="o">,</span> <span class="n">fitParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span><span class="o">,</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">org.apache.flink.ml.math.Breeze._</span>
+    <span class="k">val</span> <span class="n">meanTrainingData</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">]</span> <span class="k">=</span> <span class="n">input</span>
+      <span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">asBreeze</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="o">}</span>
+      <span class="o">.</span><span class="n">reduce</span><span class="o">{</span>
+        <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span>
+          <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">)</span>
+      <span class="o">}</span>
+      <span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">p</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="n">_1</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">fromBreeze</span> <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p><code>FitOperation[T, I]</code> 有一个 <code>fit</code> 方法，该方法在调用时需要一个 <code>T</code> 类型的实例，一个参数映射和一个输入 <code>DataSet[I]</code>。
+在我们的例子中，<code>T=MeanTransformer</code> 且 <code>I=DenseVector</code>。
+如果我们的拟合步骤所需的参数在 <code>Transformer</code> 创建时没有给定，则需要参数映射。
+<code>MeanTransformer</code> 的 <code>FitOperation</code> 对给定的输入数据集 <code>DenseVector</code> instances 求和，并将结果除以向量的总数。
+这样的话，我们获得一个含有平均值的 <code>DataSet[DenseVector]</code>。</p>
+
+<p>如果我们再仔细了解这个实现，可以发现平均值计算的结果并没有在任何代码中被储存。
+我们想要在后面的步骤中使用这个结果或“知识”来调整我们输入的平均值，我们需要保存它。
+而这就是提供给 <code>fit</code> 方法的 <code>MeanTransformer</code> 类型参数发挥作用的时候。
+我们能够使用这个实例来存储状态，该状态能够被接下来工作在同一个对象上的 <code>transform</code> 操作所使用。
+但是首先，我们必须通过一个成员字段继承 <code>MeanTransformer</code> ，并调整 <code>FitOperation</code> 的实现。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">MeanTransformer</span> <span class="k">extends</span> <span class="nc">Transformer</span><span class="o">[</span><span class="kt">Centering</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">meanOption</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">None</span>
+
+  <span class="k">def</span> <span class="n">setMean</span><span class="o">(</span><span class="n">mean</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Mean</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">MeanTransformer</span><span class="o">.</span><span class="nc">Mean</span><span class="o">,</span> <span class="n">mu</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">denseVectorMeanFitOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FitOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">fit</span><span class="o">(</span><span class="n">instance</span><span class="k">:</span> <span class="kt">MeanTransformer</span><span class="o">,</span> <span class="n">fitParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span><span class="o">,</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">org.apache.flink.ml.math.Breeze._</span>
+
+    <span class="n">instance</span><span class="o">.</span><span class="n">meanOption</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">input</span>
+      <span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">asBreeze</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="o">}</span>
+      <span class="o">.</span><span class="n">reduce</span><span class="o">{</span>
+        <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span>
+          <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">)</span>
+      <span class="o">}</span>
+      <span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">p</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="n">_1</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">fromBreeze</span> <span class="o">})</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>如果我们观察 <code>Transformer</code> 中的 <code>transform</code> 方法，可以发现我们还需要 <code>TransformOperation</code> 的实现。
+以下是平均值转换实现的其中一种方式。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">denseVectorMeanTransformOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">TransformOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">DenseVector</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">transform</span><span class="o">(</span>
+      <span class="n">instance</span><span class="k">:</span> <span class="kt">MeanTransformer</span><span class="o">,</span>
+      <span class="n">transformParameters</span><span class="k">:</span> <span class="kt">ParameterMap</span><span class="o">,</span>
+      <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">])</span>
+    <span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">resultingParameters</span> <span class="k">=</span> <span class="n">parameters</span> <span class="o">++</span> <span class="n">transformParameters</span>
+
+    <span class="k">val</span> <span class="n">resultingMean</span> <span class="k">=</span> <span class="n">resultingParameters</span><span class="o">(</span><span class="nc">MeanTransformer</span><span class="o">.</span><span class="nc">Mean</span><span class="o">)</span>
+
+    <span class="n">instance</span><span class="o">.</span><span class="n">meanOption</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">trainingMean</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+        <span class="n">input</span><span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="k">new</span> <span class="nc">MeanTransformMapper</span><span class="o">(</span><span class="n">resultingMean</span><span class="o">)</span> <span class="o">}.</span><span class="n">withBroadcastSet</span><span class="o">(</span><span class="n">trainingMean</span><span class="o">,</span> <span class="s">&quot;trainingMean&quot;</span><span class="o">)</span>
+      <span class="o">}</span>
+      <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">RuntimeException</span><span class="o">(</span><span class="s">&quot;MeanTransformer has not been fitted to data.&quot;</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">MeanTransformMapper</span><span class="o">(</span><span class="n">resultingMean</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">RichMapFunction</span><span class="o">[</span><span class="kt">DenseVector</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">trainingMean</span><span class="k">:</span> <span class="kt">DenseVector</span> <span class="o">=</span> <span class="kc">null</span>
+
+  <span class="k">override</span> <span class="k">def</span> <span class="n">open</span><span class="o">(</span><span class="n">parameters</span><span class="k">:</span> <span class="kt">Configuration</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">trainingMean</span> <span class="k">=</span> <span class="n">getRuntimeContext</span><span class="o">().</span><span class="n">getBroadcastVariable</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">](</span><span class="s">&quot;trainingMean&quot;</span><span class="o">).</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">override</span> <span class="k">def</span> <span class="n">map</span><span class="o">(</span><span class="n">vector</span><span class="k">:</span> <span class="kt">DenseVector</span><span class="o">)</span><span class="k">:</span> <span class="kt">DenseVector</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">org.apache.flink.ml.math.Breeze._</span>
+
+    <span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">vector</span><span class="o">.</span><span class="n">asBreeze</span> <span class="o">-</span> <span class="n">trainingMean</span><span class="o">.</span><span class="n">asBreeze</span> <span class="o">+</span> <span class="n">resultingMean</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">fromBreeze</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>现在我们所需的都实现了，可以对一个 <code>DenseVector</code> 实例训练数据集拟合我们的 <code>MeanTransformer</code> 并 转换他们。
+然而，当我们执行 <code>fit</code> 操作</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">trainingData</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">meanTransformer</span> <span class="k">=</span> <span class="nc">MeanTransformer</span><span class="o">()</span>
+
+<span class="n">meanTransformer</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">trainingData</span><span class="o">)</span></code></pre></div>
+
+<p>我们在运行程序时收到以下错误信息: <code>"There is no FitOperation defined for class MeanTransformer which trains on a DataSet[org.apache.flink.ml.math.DenseVector]"</code>.
+原因是 Scala 编译器不能为 <code>fit</code> 方法的隐式参数找到一个符合 <code>FitOperation</code> 正确类型的值。
+因此，它选择了最原先的隐式值，而该值在运行时引发了这个错误信息。
+为了使编译器能理解我们的实现，我们必须讲它作为一个隐式值定义，并将之放在 <code>MeanTransformer</code> 的伴生对象中。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">object</span> <span class="nc">MeanTransformer</span><span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">val</span> <span class="n">denseVectorMeanFitOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FitOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">...</span>
+
+  <span class="k">implicit</span> <span class="k">val</span> <span class="n">denseVectorMeanTransformOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">TransformOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">DenseVector</span>, <span class="kt">DenseVector</span><span class="o">]</span> <span class="o">...</span>
+<span class="o">}</span></code></pre></div>
+
+<p>现在我们以 <code>DataSet[DenseVector]</code> 为输入调用我们的 <code>MeanTransformer</code> 的 <code>fit</code> 和 <code>transform</code> 方法。
+不仅如此，我们现在能把 transformer 作为分析管道的一部分来使用，该管道有一个 <code>DenseVector</code> 作为输入和一个输出。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">trainingData</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">DenseVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">mean</span> <span class="k">=</span> <span class="nc">MeanTransformer</span><span class="o">.</span><span class="n">setMean</span><span class="o">(</span><span class="mf">1.0</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">polyFeatures</span> <span class="k">=</span> <span class="nc">PolynomialFeatures</span><span class="o">().</span><span class="n">setDegree</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">pipeline</span> <span class="k">=</span> <span class="n">mean</span><span class="o">.</span><span class="n">chainTransformer</span><span class="o">(</span><span class="n">polyFeatures</span><span class="o">)</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">trainingData</span><span class="o">)</span></code></pre></div>
+
+<p>值得注意的是，不需要额外的代码来使用链接
+该系统会自动使用每个部件的操作来自动构建 pipeline 逻辑。</p>
+
+<p>到目前为止，用 <code>DenseVector</code> 作为输入一切顺利。
+但如果我们使用 <code>LabeledVector</code> 来调 transformer，会发生什么情况？</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">trainingData</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">LabeledVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">mean</span> <span class="k">=</span> <span class="nc">MeanTransformer</span><span class="o">()</span>
+
+<span class="n">mean</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">trainingData</span><span class="o">)</span></code></pre></div>
+
+<p>跟之前相同，在运行程序时抛出了以下异常信息: <code>"There is no FitOperation defined for class MeanTransformer which trains on a DataSet[org.apache.flink.ml.common.LabeledVector]"</code>.
+值得留意的是，这个异常在准备阶段 (pre-flight phase) 就被抛出，意味着此时工作还没被提交到运行系统。
+这有一个很大的好处：你不会看到一个工作在跑了若干天之后由于 pipeline 组件的不兼容而失败。
+因此，类型的兼容性在整个工作的早期就被检查。</p>
+
+<p>为了让 <code>MeanTransformer</code> 也能工作在 <code>LabeledVector</code> 上，我们必须提供相关的操作。
+因此，我们需要在 <code>MeanTransformer</code> 的伴生对象域内定义一个 <code>FitOperation[MeanTransformer, LabeledVector]</code> 和 <code>TransformOperation[MeanTransformer, LabeledVector, LabeledVector]</code> 作为隐式值。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">object</span> <span class="nc">MeanTransformer</span> <span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">val</span> <span class="n">labeledVectorFitOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FitOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">LabeledVector</span><span class="o">]</span> <span class="o">...</span>
+
+  <span class="k">implicit</span> <span class="k">val</span> <span class="n">labeledVectorTransformOperation</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">TransformOperation</span><span class="o">[</span><span class="kt">MeanTransformer</span>, <span class="kt">LabeledVector</span>, <span class="kt">LabeledVector</span><span class="o">]</span> <span class="o">...</span>
+<span class="o">}</span></code></pre></div>
+
+<p>如果我们希望实现一个 <code>Predictor</code> 而不是 <code>Transformer</code>， 我们也需要提供一个 <code>FitOperation</code>。
+此外，一个 <code>Predictor</code> 需要一个实现如何在测试集上计算预测值的 <code>PredictOperation</code>。  </p>
+
+
+ <div class="footer">
+  发现错误？想参与编辑？
+  <a href="https://github.com/flink-china/flink-china-doc/edit/1.2.0/dev/libs/ml/pipelines.md" target="_blank">
+    在 Github 上编辑此页！
+  </a>
+</div>
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.2.0/page/js/flink.js"></script>
+
+   <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

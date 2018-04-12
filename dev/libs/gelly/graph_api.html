@@ -1,0 +1,3770 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.2 Documentation: Graph API</title>
+    <link rel="shortcut icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/codetabs.css">
+    <link rel="stylesheet" href="/1.2.0/page/font-awesome/css/font-awesome.min.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          
+
+
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sidenav-logo">
+  <p><a href="/1.2.0"><img class="bottom" alt="Apache Flink" src="/1.2.0/page/img/navbar-brand-logo.jpg"></a> v1.2</p>
+</div>
+<ul id="sidenav">
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/index.html"><i class="fa fa-home title" aria-hidden="true"></i> 首页</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-2" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/concepts/programming-model.html">编程模型</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/concepts/runtime.html">Distributed Runtime</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/setup_quickstart.html"><i class="fa fa-power-off title appetizer" aria-hidden="true"></i> 快速起步</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-7" data-toggle="collapse"><i class="fa fa-file-code-o title appetizer" aria-hidden="true"></i> 示例 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-7"><ul>
+  <li><a href="/1.2.0/examples/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/run_example_quickstart.html">Monitoring Wikipedia Edits</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/examples.html">Batch Examples</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-11" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> 建立工程 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-11"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/java_api_quickstart.html">Java 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/scala_api_quickstart.html">Scala 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking_with_flink.html">Linking with Flink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/ide_setup.html">IDE Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_shell.html">Scala REPL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking.html">关联可选模块</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/flink_on_windows.html">Running Flink on Windows</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/building.html">Building Flink from Source</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-21" data-toggle="collapse" class="active"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</a><div class="collapse in" id="collapse-21"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-22" data-toggle="collapse">Basic API Concepts <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+  <li><a href="/1.2.0/dev/api_concepts.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_api_extensions.html">Scala API Extensions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/java8.html">Java 8</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-26" data-toggle="collapse">Streaming (DataStream API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-26"><ul>
+  <li><a href="/1.2.0/dev/datastream_api.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/dev/windows.html">Windows</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-28" data-toggle="collapse">Event Time <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+  <li><a href="/1.2.0/dev/event_time.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamps_watermarks.html">Generating Timestamps / Watermarks</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamp_extractors.html">预定义的 Timestamp Extractors / Watermark Emitters</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-32" data-toggle="collapse">Connectors <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-32"><ul>
+  <li><a href="/1.2.0/dev/connectors/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/guarantees.html">Fault Tolerance Guarantees</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kafka.html">Kafka</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/cassandra.html">Cassandra</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kinesis.html">Kinesis</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/filesystem_sink.html">Rolling File Sink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/nifi.html">NiFi</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/twitter.html">Twitter</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/process_function.html">过程函数</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/side_output.html">Side Outputs</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/state.html">Working with State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/checkpointing.html">Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/asyncio.html">Async I/O</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/queryable_state.html">Queryable State</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-50" data-toggle="collapse">批 (DataSet API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-50"><ul>
+  <li><a href="/1.2.0/dev/batch/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/dataset_transformations.html">Transformations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/iterations.html">Iterations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/fault_tolerance.html">Fault Tolerance</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/python.html">Python API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/connectors.html">Connectors</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/hadoop_compatibility.html">Hadoop Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/local_execution.html">Local Execution</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/cluster_execution.html">Cluster Execution</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-61" data-toggle="collapse">数据类型和序列化 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-61"><ul>
+  <li><a href="/1.2.0/dev/types_serialization.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/custom_serializers.html">Custom Serializers</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-64" data-toggle="collapse">Managing Execution <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-64"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_configuration.html">Execution Configuration</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/packaging.html">Program Packaging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/parallel.html">并行执行</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_plans.html">执行计划</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/restart_strategies.html">Restart Strategies</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-71" data-toggle="collapse" class="active">Libraries</a><div class="collapse in" id="collapse-71"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/table_api.html">Table and SQL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/cep.html">Event Processing (CEP)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/storm_compatibility.html">Storm Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-75" data-toggle="collapse" class="active">Graphs: Gelly</a><div class="collapse in" id="collapse-75"><ul>
+  <li><a href="/1.2.0/dev/libs/gelly/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_api.html" class="active">Graph API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/library_methods.html">Library Methods</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-83" data-toggle="collapse">机器学习 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-83"><ul>
+  <li><a href="/1.2.0/dev/libs/ml/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/quickstart.html">快速入门</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">多元线性回归</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/cross_validation.html">交叉验证</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/distance_metrics.html">距离度量</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/knn.html">K近邻算法（KNN）</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/min_max_scaler.html">最小最大值标准化</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/contribution_guide.html">贡献指南</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/pipelines.html">Pipelines</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/polynomial_features.html">多项式特征转换</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/als.html">ALS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/sos.html">Stochastic Outlier Selection</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/standard_scaler.html">标准化缩放</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/svm.html">支持向量机（SVM using CoCoA）</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/best_practices.html">Best Practices</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/migration.html">API Migration Guides</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-102" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> 部署与运维 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-102"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/setup/config.html">Configuration</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cli.html">CLI</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-105" data-toggle="collapse">Clusters & Deployment <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-105"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cluster_setup.html">Standalone Cluster</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/yarn_setup.html">YARN</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mesos.html">Mesos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/aws.html">AWS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/gce_setup.html">Google Compute Engine</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mapr_setup.html">MapR</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/jobmanager_high_availability.html">High Availability (HA)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/checkpoints.html">Checkpoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/savepoints.html">Savepoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/security-ssl.html">SSL Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/security-kerberos.html">Kerberos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/upgrading.html">Upgrading Applications and Flink Versions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/production_ready.html">生产环境检查清单</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-121" data-toggle="collapse"><i class="fa fa-bug title maindish" aria-hidden="true"></i> 调试与监控 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/metrics.html">Metrics</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/logging.html">Logging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/historyserver.html">History Server</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/checkpoint_monitoring.html">Monitoring Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/back_pressure.html">Monitoring Back Pressure</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/rest_api.html">Monitoring REST API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/large_state_tuning.html">Debugging and Tuning Checkpoints and Large State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_event_time.html">Debugging Windows & Event Time</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_classloading.html">Debugging Classloading</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/application_profiling.html">Application Profiling</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-133" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内部原理 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/components.html">Component Stack</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/task_lifecycle.html">Task Lifecycle</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/filesystems.html">File Systems</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+<li><a href="/1.2.0/about/index.html"><i class="fa fa-fire title hot" aria-hidden="true"></i> 参与贡献</a></li>
+    
+  
+
+  
+    
+      
+  <li class="divider"></li>
+  <li><a href="http://flink-china.org"><i class="fa fa-external-link title" aria-hidden="true"></i> 项目页面</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="/1.2.0/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="搜索文档">
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <li><a href="http://doc.flink-china.org/1.1.0/">v1.1</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+        </div>
+        <div class="col-lg-9 content">
+          
+
+          
+
+
+
+
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+
+
+
+<ol class="breadcrumb">
+
+  
+  
+    <li><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</li>
+  
+
+  
+  
+    <li>Libraries</li>
+  
+
+  
+  
+    <li><a href="/1.2.0/dev/libs/gelly/index.html">Graphs: Gelly</a></li>
+  
+
+  
+  
+    <li class="active">Graph API</li>
+  
+
+</ol>
+
+<h1>Graph API</h1>
+
+
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">图的表示</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">创建图</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">图的属性</a></li>
+  <li><a href="#section-3" id="markdown-toc-section-3">图的变换</a></li>
+  <li><a href="#section-4" id="markdown-toc-section-4">图的变化</a></li>
+  <li><a href="#section-5" id="markdown-toc-section-5">邻域方法</a></li>
+  <li><a href="#section-6" id="markdown-toc-section-6">图的校验</a></li>
+</ul>
+
+<h2 id="section">图的表示</h2>
+
+<p>在Gelly中， <code>图(Graph)</code>由顶点(vertex)的<code>DataSet</code> 和边(edge)的<code>DataSet</code>表示。</p>
+
+<p><code>图</code>的顶点由<code>Vertex</code>类表示。<code>Vertex</code>由一个唯一ID 和一个value 定义。<code>Vertex</code>ID 应该实现<code>Comparable</code>接口。要表示没有value的顶点，可以将value的类型设为<code>NullType</code>。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 用Long 类型的ID 和String 类型的 value 新建一个顶点</span>
+<span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;(</span><span class="mi">1L</span><span class="o">,</span> <span class="s">&quot;foo&quot;</span><span class="o">);</span>
+
+<span class="c1">// 用一个Long 类型的ID 和空value 新建一个顶点</span>
+<span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">&gt;(</span><span class="mi">1L</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">.</span><span class="na">getInstance</span><span class="o">());</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 用Long 类型的ID 和String 类型的 value 新建一个顶点</span>
+<span class="k">val</span> <span class="n">v</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Vertex</span><span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="s">&quot;foo&quot;</span><span class="o">)</span>
+
+<span class="c1">// 用一个Long 类型的ID 和空value 新建一个顶点</span>
+<span class="k">val</span> <span class="n">v</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Vertex</span><span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="nc">NullValue</span><span class="o">.</span><span class="n">getInstance</span><span class="o">())</span></code></pre></div>
+
+  </div>
+</div>
+
+<p>图的边用<code>Edge</code>类表示。<code>Edge</code>由一个源ID (即源<code>Vertex</code>的ID)，一个目的ID (即目的<code>Vertex</code>的ID)，一个可选的value 定义。源ID 和目的ID 应该与<code>Vertex</code>的ID 属于相同的类。没有值的边，它的value 类型为<code>NullValue</code>。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;(</span><span class="mi">1L</span><span class="o">,</span> <span class="mi">2L</span><span class="o">,</span> <span class="mf">0.5</span><span class="o">);</span>
+
+<span class="c1">// 反转一条边的两个点</span>
+<span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">reversed</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">reverse</span><span class="o">();</span>
+
+<span class="n">Double</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span> <span class="c1">// weight = 0.5</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">e</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Edge</span><span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="mi">2L</span><span class="o">,</span> <span class="mf">0.5</span><span class="o">)</span>
+
+<span class="c1">// 反转一条边的两个点</span>
+<span class="k">val</span> <span class="n">reversed</span> <span class="k">=</span> <span class="n">e</span><span class="o">.</span><span class="n">reverse</span>
+
+<span class="k">val</span> <span class="n">weight</span> <span class="k">=</span> <span class="n">e</span><span class="o">.</span><span class="n">getValue</span> <span class="c1">// weight = 0.5</span></code></pre></div>
+
+  </div>
+</div>
+
+<p>在Gelly中，<code>Edge</code>永远从源端点指向目的端点。对一个<code>Graph</code>而言，如果每条<code>Edge</code> 都对应着另一条从目的端点指向源端点的<code>Edge</code>，那么它可能是无向的。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-1">创建图</h2>
+
+<p>你可以通过如下方法创建一个<code>Graph</code>：</p>
+
+<ul>
+  <li>根据一个由边组成的<code>DataSet</code>，可选参数是一个由顶点组成的<code>DataSet</code>：</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">vertices</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;&gt;</span> <span class="n">edges</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">vertices</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Long</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Double</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li>根据一个由表示边的<code>Tuple2</code>类组成的<code>DataSet</code>。Gelly 将把每个<code>Tuple2</code>转换成<code>Edge</code>，其中第一个field 将作为源ID，第二个field 将作为目的ID。顶点和边的值都会被置为<code>NullValue</code>。</li>
+</ul>
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">edges</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromTuple2DataSet</span><span class="o">(</span><span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">String</span>, <span class="kt">String</span><span class="o">)]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromTuple2DataSet</span><span class="o">(</span><span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li>根据一个由<code>Tuple3</code>组成的<code>DataSet</code>，可选参数是一个由<code>Tuple2</code>组成的<code>DataSet</code>。这种情况下，Gelly 将把每个<code>Tuple3</code>转换成<code>Edge</code>，其中第一个field 将成为源ID，第二个field 将成为目的ID，第三个field 将成为边的value。同样地，每个<code>Tuple2</code>将被转换为一个<code>Vertex</code>，其中第一个field 将成为端点的ID，第二个field 将成为端点的value。</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">vertexTuples</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">readCsvFile</span><span class="o">(</span><span class="s">&quot;path/to/vertex/input&quot;</span><span class="o">).</span><span class="na">types</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple3</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;&gt;</span> <span class="n">edgeTuples</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">readCsvFile</span><span class="o">(</span><span class="s">&quot;path/to/edge/input&quot;</span><span class="o">).</span><span class="na">types</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Double</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromTupleDataSet</span><span class="o">(</span><span class="n">vertexTuples</span><span class="o">,</span> <span class="n">edgeTuples</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span></code></pre></div>
+
+    <ul>
+      <li>
+        <p>根据一个包含边数据的CSV文件，可选参数是一个包含端点数据的CSV文件。这种情况下，Gelly 将把边CSV文件的每一行转换成一个<code>Edge</code>，其中第一个field 将成为源ID， 第二个field 将成为目的ID， 第三个field (如果存在的话)将成为边的value。同样地，可选端点CSV文件的每一行将被转换成一个<code>Vertex</code>，其中第一个field 将成为端点的ID，第二个field（如果存在的话）将成为端点的value。想从<code>GraphCsvReader</code>得到<code>Graph</code>，必须用下面的某种方法指定类型：</p>
+      </li>
+      <li><code>types(Class&lt;K&gt; vertexKey, Class&lt;VV&gt; vertexValue,Class&lt;EV&gt; edgeValue)</code>: both vertex and edge values are present.</li>
+      <li><code>edgeTypes(Class&lt;K&gt; vertexKey, Class&lt;EV&gt; edgeValue)</code>: the Graph has edge values, but no vertex values.</li>
+      <li><code>vertexTypes(Class&lt;K&gt; vertexKey, Class&lt;VV&gt; vertexValue)</code>: the Graph has vertex values, but no edge values.</li>
+      <li><code>keyType(Class&lt;K&gt; vertexKey)</code>: the Graph has no vertex values and no edge values.</li>
+    </ul>
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// 生成一个Vertex ID为String 类型、Vertex value为Long 类型，Edge value为Double 类型的图  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCsvReader</span><span class="o">(</span><span class="s">&quot;path/to/vertex/input&quot;</span><span class="o">,</span> <span class="s">&quot;path/to/edge/input&quot;</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+					<span class="o">.</span><span class="na">types</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Double</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+
+<span class="c1">// 生成一个Vertex 和Edge 都没有value 的图</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">&gt;</span> <span class="n">simpleGraph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCsvReader</span><span class="o">(</span><span class="s">&quot;path/to/edge/input&quot;</span><span class="o">,</span> <span class="n">env</span><span class="o">).</span><span class="na">keyType</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">vertexTuples</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span><span class="n">readCsvFile</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Long</span><span class="o">](</span><span class="s">&quot;path/to/vertex/input&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">edgeTuples</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span><span class="n">readCsvFile</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">String</span>, <span class="kt">Double</span><span class="o">](</span><span class="s">&quot;path/to/edge/input&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromTupleDataSet</span><span class="o">(</span><span class="n">vertexTuples</span><span class="o">,</span> <span class="n">edgeTuples</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+    <ul>
+      <li>根据一个包含边数据的csv文件，可选参数是一个包含端点数据的csv文件。这种情况下，Gelly 将把边CSV文件的每一行转换成一个<code>Edge</code>，其中第一个field 将成为源ID， 第二个field 将成为目的ID， 第三个field (如果存在的话)将成为边的value。如果这条边没有关联的value， 将边的类型参数(第三个类型参数)设为<code>NullValue</code>。你也可以指定用某个值初始化端点。</li>
+    </ul>
+
+    <p>如果通过<code>pathVertices</code>提供了CSV 文件的路径，那么文件的每行都会被转换成一个<code>Vertex</code>。每行的第一个field 将成为端点的ID， 第二个field 将成为端点的value。</p>
+
+    <p>如果通过参数<code>vertexValueInitializer</code>提供了端点value的初始化工具<code>MapFunction</code> ，那么这个函数可以用来生成端点的值。根据边的输入，可以自动生成端点的集合。如果端点没有关联值，要将端点value的类型参数（第二个类型参数）设为<code>NullValue</code>。根据边的输入，会自动生成值类型为<code>NullValue</code>的端点集合。</p>
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="c1">// create a Graph with String Vertex IDs, Long Vertex values and Double Edge values</span>
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCsvReader</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Long</span>, <span class="kt">Double</span><span class="o">](</span>
+		<span class="n">pathVertices</span> <span class="k">=</span> <span class="s">&quot;path/to/vertex/input&quot;</span><span class="o">,</span>
+		<span class="n">pathEdges</span> <span class="k">=</span> <span class="s">&quot;path/to/edge/input&quot;</span><span class="o">,</span>
+		<span class="n">env</span> <span class="k">=</span> <span class="n">env</span><span class="o">)</span>
+
+
+<span class="c1">// create a Graph with neither Vertex nor Edge values</span>
+<span class="k">val</span> <span class="n">simpleGraph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCsvReader</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">NullValue</span>, <span class="kt">NullValue</span><span class="o">](</span>
+		<span class="n">pathEdges</span> <span class="k">=</span> <span class="s">&quot;path/to/edge/input&quot;</span><span class="o">,</span>
+		<span class="n">env</span> <span class="k">=</span> <span class="n">env</span><span class="o">)</span>
+
+<span class="c1">// create a Graph with Double Vertex values generated by a vertex value initializer and no Edge values</span>
+<span class="k">val</span> <span class="n">simpleGraph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCsvReader</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Double</span>, <span class="kt">NullValue</span><span class="o">](</span>
+        <span class="n">pathEdges</span> <span class="k">=</span> <span class="s">&quot;path/to/edge/input&quot;</span><span class="o">,</span>
+        <span class="n">vertexValueInitializer</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">MapFunction</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Double</span><span class="o">]()</span> <span class="o">{</span>
+            <span class="k">def</span> <span class="n">map</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="n">id</span><span class="o">.</span><span class="n">toDouble</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+        <span class="n">env</span> <span class="k">=</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li>根据一个由边组成的<code>Collection</code>，可选参数是一个由端点组成的<code>Collection</code>:</li>
+</ul>
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">vertexList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">...</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">edgeList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">...</span>
+
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">vertexList</span><span class="o">,</span> <span class="n">edgeList</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span></code></pre></div>
+
+    <p>如果创建图时没有提供端点数据，Gelly 会根据边的输入自动生成一个<code>Vertex</code>的<code>DataSet</code>。这种情况下，生成的端点是没有值的。另外，将<code>MapFunction</code> 作为构建函数的一个参数传进去，也可以初始化<code>Vertex</code>的:</p>
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// 初始化时，将端点的值设为端点的ID</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">edgeList</span><span class="o">,</span>
+				<span class="k">new</span> <span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{</span>
+					<span class="kd">public</span> <span class="n">Long</span> <span class="nf">map</span><span class="o">(</span><span class="n">Long</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+						<span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+					<span class="o">}</span>
+				<span class="o">},</span> <span class="n">env</span><span class="o">);</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">vertexList</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(...)</span>
+
+<span class="k">val</span> <span class="n">edgeList</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(...)</span>
+
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCollection</span><span class="o">(</span><span class="n">vertexList</span><span class="o">,</span> <span class="n">edgeList</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+    <p>如果创建图时没有提供端点的数据，Gelly 会根据边的输入自动生成一个<code>Vertex</code>的<code>DataSet</code>。这种情况下，生成的端点是没有值的。另外，将<code>MapFunction</code> 作为构建函数的一个参数传进去，也可初始化<code>Vertex</code>的值:</p>
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">val</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span>
+
+<span class="c1">// 初始化时，将端点的值设为端点的ID</span>
+<span class="n">val</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">edgeList</span><span class="o">,</span>
+    <span class="k">new</span> <span class="n">MapFunction</span><span class="o">[</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">]</span> <span class="o">{</span>
+       <span class="n">def</span> <span class="nf">map</span><span class="o">(</span><span class="nl">id:</span> <span class="n">Long</span><span class="o">):</span> <span class="n">Long</span> <span class="o">=</span> <span class="n">id</span>
+    <span class="o">},</span> <span class="n">env</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-2">图的属性</h2>
+
+<p>Gelly 提供了一些方法获取图的各种属性:</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 获取由端点构成的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;&gt;</span> <span class="nf">getVertices</span><span class="o">()</span>
+
+<span class="c1">// 获取边的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;&gt;</span> <span class="nf">getEdges</span><span class="o">()</span>
+
+<span class="c1">// 获取由端点的ID构成的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="nf">getVertexIds</span><span class="o">()</span>
+
+<span class="c1">// 获取由边ID构成的source-target pair组成的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">K</span><span class="o">&gt;&gt;</span> <span class="nf">getEdgeIds</span><span class="o">()</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 入度&gt; pair 组成的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;&gt;</span> <span class="nf">inDegrees</span><span class="o">()</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 出度&gt; pair 组成的DataSet</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;&gt;</span> <span class="nf">outDegrees</span><span class="o">()</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 度&gt; pair 组成的DataSet，这里的度 = 入度 + 出度</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;&gt;</span> <span class="nf">getDegrees</span><span class="o">()</span>
+
+<span class="c1">// 获取端点的数量</span>
+<span class="kt">long</span> <span class="nf">numberOfVertices</span><span class="o">()</span>
+
+<span class="c1">// 获取边的数量</span>
+<span class="kt">long</span> <span class="nf">numberOfEdges</span><span class="o">()</span>
+
+<span class="c1">// 获取由三元组&lt;srcVertex, trgVertex, edge&gt; 构成的DataSet  </span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Triplet</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;&gt;</span> <span class="nf">getTriplets</span><span class="o">()</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 获取由端点构成的DataSet</span>
+<span class="n">getVertices</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">]]</span>
+
+<span class="c1">// 获取边的DataSet</span>
+<span class="n">getEdges</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">EV</span><span class="o">]]</span>
+
+<span class="c1">// 获取由端点的ID构成的DataSet</span>
+<span class="n">getVertexIds</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">K</span><span class="o">]</span>
+
+<span class="c1">// 获取由边ID构成的source-target pair组成的DataSet</span>
+<span class="n">getEdgeIds</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">K</span>, <span class="kt">K</span><span class="o">)]</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 入度&gt; pair 组成的DataSet  </span>
+<span class="n">inDegrees</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">K</span>, <span class="kt">LongValue</span><span class="o">)]</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 出度&gt; pair 组成的DataSet</span>
+<span class="n">outDegrees</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">K</span>, <span class="kt">LongValue</span><span class="o">)]</span>
+
+<span class="c1">// 获取端点的&lt;端点ID， 度&gt; pair 组成的DataSet，这里的度 = 入度 + 出度</span>
+<span class="n">getDegrees</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">K</span>, <span class="kt">LongValue</span><span class="o">)]</span>
+
+<span class="c1">// 获取端点的数量 </span>
+<span class="n">numberOfVertices</span><span class="k">:</span> <span class="kt">Long</span>
+
+<span class="c1">// 获取边的数量 </span>
+<span class="n">numberOfEdges</span><span class="k">:</span> <span class="kt">Long</span>
+
+<span class="c1">// 获取由三元组&lt;srcVertex, trgVertex, edge&gt; 构成的DataSet</span>
+<span class="n">getTriplets</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Triplet</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span>, <span class="kt">EV</span><span class="o">]]</span></code></pre></div>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-3">图的变换</h2>
+<ul>
+  <li><strong>Map</strong>: Gelly 专门提供了一些方法，用来对端点的值和边的值进行map 变换。<code>mapVertices</code>和<code>mapEdges</code>返回一个新的<code>Graph</code>，它的端点(或者边)的ID保持不变，但是值变成了用户自定义的map 函数所提供的对应值。map 函数也允许改变端点或者边的值的类型。</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span>
+
+<span class="c1">// 把每个端点的值加1</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">updatedGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="na">mapVertices</span><span class="o">(</span>
+				<span class="k">new</span> <span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{</span>
+					<span class="kd">public</span> <span class="n">Long</span> <span class="nf">map</span><span class="o">(</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+						<span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+					<span class="o">}</span>
+				<span class="o">});</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+
+<span class="c1">// increment each vertex value by one</span>
+<span class="k">val</span> <span class="n">updatedGraph</span> <span class="k">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">mapVertices</span><span class="o">(</span><span class="n">v</span> <span class="k">=&gt;</span> <span class="n">v</span><span class="o">.</span><span class="n">getValue</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li><strong>Translate</strong>: Gelly 提供专门的方法用来translate 端点和边的ID的类型和值(<code>translateGraphIDs</code>)，端点的值(<code>translateVertexValues</code>)，或者边的值(<code>translateEdgeValues</code>)。Translation 的过程是由用户定义的map 函数完成的，<code>org.apache.flink.graph.asm.translate</code> 这个包也提供了一些map 函数。同一个<code>MapFunction</code>，在上述三种方法里是通用的。</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span>
+
+<span class="c1">// 将每个端点和边的ID translate 成String 类型  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">updatedGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="na">translateGraphIds</span><span class="o">(</span>
+				<span class="k">new</span> <span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+					<span class="kd">public</span> <span class="n">String</span> <span class="nf">map</span><span class="o">(</span><span class="n">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+						<span class="k">return</span> <span class="n">id</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+					<span class="o">}</span>
+				<span class="o">});</span>
+
+<span class="c1">// 将端点ID，边ID，端点值，边的值 translage 成LongValue 类型  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">LongValue</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;</span> <span class="n">updatedGraph</span> <span class="o">=</span> <span class="n">graph</span>
+                <span class="o">.</span><span class="na">translateGraphIds</span><span class="o">(</span><span class="k">new</span> <span class="nf">LongToLongValue</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">translateVertexValues</span><span class="o">(</span><span class="k">new</span> <span class="nf">LongToLongValue</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">translateEdgeValues</span><span class="o">(</span><span class="k">new</span> <span class="nf">LongToLongValue</span><span class="o">())</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromDataSet</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+
+<span class="c1">// 将每个端点和边的ID translate 成String 类型  </span>
+<span class="k">val</span> <span class="n">updatedGraph</span> <span class="k">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">translateGraphIds</span><span class="o">(</span><span class="n">id</span> <span class="k">=&gt;</span> <span class="n">id</span><span class="o">.</span><span class="n">toString</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li><strong>Filter</strong>: Filter 变换将用户自定义的filter 函数作用于<code>Graph</code>中的顶点/边。<code>filterOnEdges</code> 生成原始图的一个sub-graph，只留下那些满足预设条件的边。注意，端点的dataset 将不会变动。对应地，<code>filterOnVertices</code> 在图的端点上应用filter。那些源/目的端点不满足vertex条件的边，将从最终的边组成的 dataset中删除。可以使用<code>subgraph</code> 方法，同时在端点和边上应用filter 函数。</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">graph</span><span class="o">.</span><span class="na">subgraph</span><span class="o">(</span>
+		<span class="k">new</span> <span class="n">FilterFunction</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+			   	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filter</span><span class="o">(</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">)</span> <span class="o">{</span>
+					<span class="c1">// keep only vertices with positive values</span>
+					<span class="k">return</span> <span class="o">(</span><span class="n">vertex</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">);</span>
+			   <span class="o">}</span>
+		   <span class="o">},</span>
+		<span class="k">new</span> <span class="n">FilterFunction</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+				<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filter</span><span class="o">(</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">edge</span><span class="o">)</span> <span class="o">{</span>
+					<span class="c1">// keep only edges with negative values</span>
+					<span class="k">return</span> <span class="o">(</span><span class="n">edge</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">);</span>
+				<span class="o">}</span>
+		<span class="o">})</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">graph</span><span class="k">:</span> <span class="kt">Graph</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="c1">// keep only vertices with positive values</span>
+<span class="c1">// and only edges with negative values</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">subgraph</span><span class="o">((</span><span class="n">vertex</span> <span class="k">=&gt;</span> <span class="n">vertex</span><span class="o">.</span><span class="n">getValue</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">),</span> <span class="o">(</span><span class="n">edge</span> <span class="k">=&gt;</span> <span class="n">edge</span><span class="o">.</span><span class="n">getValue</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">))</span></code></pre></div>
+
+  </div>
+</div>
+
+<p class="text-center">
+    <img alt="Filter Transformations" width="80%" src="/1.2.0/fig/gelly-filter.png" />
+</p>
+
+<ul>
+  <li><strong>Join</strong>: Gelly 提供一些专门的方法，对vertex 和edge 的dataset 与其它输入的dataset 做join 操作。<code>joinWithVertices</code> 将端点与输入的一个<code>Tuple2</code>组成的dataset 做join。Join 操作使用的key 是端点的ID和<code>Tuple2</code> 的第一个field。这个方法返回一个新的<code>Graph</code>，其中端点的值已经根据用户定义的转换函数更新过了。<br />
+类似地，使用下面三种方法，输入的dataset 也可以和边做join。<code>joinWithEdges</code> 的期望输入是<code>Tuple3</code> 组成的 <code>DataSet</code>，join 操作发生在源端点和目的端点的ID 形成的组合key 上。<code>joinWithEdgesOnSource</code> 的期望输入是<code>Tuple2</code> 组成的<code>DataSet</code>，join 操作发生在边的源端点和输入的第一个field上。<code>joinWithEdgesOnTarget</code> 的期望输入是<code>Tuple2</code> 组成的<code>DataSet</code>，join 操作发生在边的目的端点和输入的第一个field上。以上的三种方法，都是在边和输入的dataset上应用变换函数。<br />
+注意，输入的dataset 如果包含重复的key，Gelly 中所有的join 方法都只会处理它遇到的第一个 value。</li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">network</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;&gt;</span> <span class="n">vertexOutDegrees</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="na">outDegrees</span><span class="o">();</span>
+
+<span class="c1">// assign the transition probabilities as the edge weights</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">networkWithWeights</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="na">joinWithEdgesOnSource</span><span class="o">(</span><span class="n">vertexOutDegrees</span><span class="o">,</span>
+				<span class="k">new</span> <span class="n">VertexJoinFunction</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">,</span> <span class="n">LongValue</span><span class="o">&gt;()</span> <span class="o">{</span>
+					<span class="kd">public</span> <span class="n">Double</span> <span class="nf">vertexJoin</span><span class="o">(</span><span class="n">Double</span> <span class="n">vertexValue</span><span class="o">,</span> <span class="n">LongValue</span> <span class="n">inputValue</span><span class="o">)</span> <span class="o">{</span>
+						<span class="k">return</span> <span class="n">vertexValue</span> <span class="o">/</span> <span class="n">inputValue</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+					<span class="o">}</span>
+				<span class="o">});</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">network</span><span class="k">:</span> <span class="kt">Graph</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">vertexOutDegrees</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">Long</span>, <span class="kt">LongValue</span><span class="o">)]</span> <span class="k">=</span> <span class="n">network</span><span class="o">.</span><span class="n">outDegrees</span>
+
+<span class="c1">// assign the transition probabilities as the edge weights</span>
+<span class="k">val</span> <span class="n">networkWithWeights</span> <span class="k">=</span> <span class="n">network</span><span class="o">.</span><span class="n">joinWithEdgesOnSource</span><span class="o">(</span><span class="n">vertexOutDegrees</span><span class="o">,</span> <span class="o">(</span><span class="n">v1</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">v2</span><span class="k">:</span> <span class="kt">LongValue</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">v1</span> <span class="o">/</span> <span class="n">v2</span><span class="o">.</span><span class="n">getValue</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<ul>
+  <li>
+    <p><strong>Reverse</strong>: <code>reverse()</code> 反转所有边，然后返回一个新的<code>Graph</code>。</p>
+  </li>
+  <li>
+    <p><strong>Undirected</strong>: Gelly中，所有的<code>Graph</code> 永远是有向的。给图中所有边都加上方向相反的边，这样就可以表示无向图。因此，Gelly提供了<code>getUndirected()</code>方法。</p>
+  </li>
+  <li>
+    <p><strong>Union</strong>: Gelly 的<code>union()</code> 方法在指定图和当前图的端点和边的集合上取并集。在得到的<code>Graph</code> 中，重复的端点会被删除；如果存在重复边，重复的端点会被保留。</p>
+  </li>
+</ul>
+
+<p class="text-center">
+    <img alt="Union Transformation" width="50%" src="/1.2.0/fig/gelly-union.png" />
+</p>
+
+<ul>
+  <li><strong>Difference</strong>：Gelly 的<code>difference()</code> 方法在指定图和当前图的端点和边的集合上取差异。</li>
+  <li><strong>Intersect</strong>: Gelly 的<code>intersect()</code> 方法在指定图和当前图的端点和边的集合上取交集。结果是生成一个新的<code>Graph</code>, 包含两个图中都存在的所有边。如果两条边的源 identifier, 目的 identifier，value 都相同，那么就认为它们是相等的。生成的图中，所有的端点都没有value。 如果需要端点的value， 可以通过<code>joinWithVertices()</code> 方法从输入图中获取。</li>
+</ul>
+
+<p>根据<code>distinct</code> 参数存在与否，相等边在生成的<code>Graph</code> 中出现的次数要么是一次，要么是输入的图中存在的相等边的pair 的数量。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// create first graph from edges {(1, 3, 12) (1, 3, 13), (1, 3, 13)}</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">edges1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph1</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">edges1</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span>
+
+<span class="c1">// create second graph from edges {(1, 3, 13)}</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">edges2</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph2</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">edges2</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span>
+
+<span class="c1">// Using distinct = true results in {(1,3,13)}</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">intersect1</span> <span class="o">=</span> <span class="n">graph1</span><span class="o">.</span><span class="na">intersect</span><span class="o">(</span><span class="n">graph2</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+<span class="c1">// Using distinct = false results in {(1,3,13),(1,3,13)} as there is one edge pair</span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">NullValue</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">intersect2</span> <span class="o">=</span> <span class="n">graph1</span><span class="o">.</span><span class="na">intersect</span><span class="o">(</span><span class="n">graph2</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="c1">// create first graph from edges {(1, 3, 12) (1, 3, 13), (1, 3, 13)}</span>
+<span class="k">val</span> <span class="n">edges1</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">graph1</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCollection</span><span class="o">(</span><span class="n">edges1</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+
+<span class="c1">// create second graph from edges {(1, 3, 13)}</span>
+<span class="k">val</span> <span class="n">edges2</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">graph2</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCollection</span><span class="o">(</span><span class="n">edges2</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+
+
+<span class="c1">// Using distinct = true results in {(1,3,13)}</span>
+<span class="k">val</span> <span class="n">intersect1</span> <span class="k">=</span> <span class="n">graph1</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">graph2</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+
+<span class="c1">// Using distinct = false results in {(1,3,13),(1,3,13)} as there is one edge pair</span>
+<span class="k">val</span> <span class="n">intersect2</span> <span class="k">=</span> <span class="n">graph1</span><span class="o">.</span><span class="n">intersect</span><span class="o">(</span><span class="n">graph2</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<p>-<a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-4">图的变化</h2>
+
+<p>Gelly 提供如下方法，增加、删除输入<code>Graph</code>的端点或者边:</p>
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 添加一个端点。如果端点已经存在，不会重复添加。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">addVertex</span><span class="o">(</span><span class="kd">final</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">)</span>
+
+<span class="c1">// 添加一个端点的list。 如果图中已经存在端点，它们最多会被添加一次。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">addVertices</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;&gt;</span> <span class="n">verticesToAdd</span><span class="o">)</span>
+
+<span class="c1">// 添加一条边。如果源端点和目的端点在图中不存在，它们也会被添加。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">addEdge</span><span class="o">(</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;</span> <span class="n">source</span><span class="o">,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;</span> <span class="n">target</span><span class="o">,</span> <span class="n">EV</span> <span class="n">edgeValue</span><span class="o">)</span>
+
+<span class="c1">// 添加一个边的list。如果在一个不存在的端点集合上添加边，边将被视为不合法，而且会被忽略。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">addEdges</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;&gt;</span> <span class="n">newEdges</span><span class="o">)</span>
+
+<span class="c1">// 从图中移除指定的端点，以及它的边。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">removeVertex</span><span class="o">(</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">)</span>
+
+<span class="c1">// 从图中移除指定的端点的集合，以及它们的边。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">removeVertices</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">&gt;&gt;</span> <span class="n">verticesToBeRemoved</span><span class="o">)</span>
+
+<span class="c1">// 移除图中*所有* 与某条给定边match 的边。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">removeEdge</span><span class="o">(</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="n">edge</span><span class="o">)</span>
+
+<span class="c1">// 给定一个边的list，移除图中*所有* 与list中的边match 的边。  </span>
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">VV</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;</span> <span class="nf">removeEdges</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">EV</span><span class="o">&gt;&gt;</span> <span class="n">edgesToBeRemoved</span><span class="o">)</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 添加一个端点。如果端点已经存在，不会重复添加。  </span>
+<span class="n">addVertex</span><span class="o">(</span><span class="n">vertex</span><span class="k">:</span> <span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">])</span>
+
+<span class="c1">// 添加一个端点的list。 如果图中已经存在端点，它们最多会被添加一次。  </span>
+<span class="n">addVertices</span><span class="o">(</span><span class="n">verticesToAdd</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">]])</span>
+
+<span class="c1">// 添加一条边。如果源端点和目的端点在图中不存在，它们也会被添加。  </span>
+<span class="n">addEdge</span><span class="o">(</span><span class="n">source</span><span class="k">:</span> <span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">],</span> <span class="n">target</span><span class="k">:</span> <span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">],</span> <span class="n">edgeValue</span><span class="k">:</span> <span class="kt">EV</span><span class="o">)</span>
+
+<span class="c1">// 添加一个边的list。如果在一个不存在的端点集合上添加边，边将被视为不合法，而且会被忽略。  </span>
+<span class="n">addEdges</span><span class="o">(</span><span class="n">edges</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">EV</span><span class="o">]])</span>
+
+<span class="c1">// 从图中移除指定的端点，以及它的边。  </span>
+<span class="n">removeVertex</span><span class="o">(</span><span class="n">vertex</span><span class="k">:</span> <span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">])</span>
+
+<span class="c1">// 从图中移除指定的端点的集合，以及它们的边。  </span>
+<span class="n">removeVertices</span><span class="o">(</span><span class="n">verticesToBeRemoved</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">VV</span><span class="o">]])</span>
+
+<span class="c1">// 移除图中*所有* 与某条给定边match 的边。  </span>
+<span class="n">removeEdge</span><span class="o">(</span><span class="n">edge</span><span class="k">:</span> <span class="kt">Edge</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">EV</span><span class="o">])</span>
+
+<span class="c1">// 给定一个边的list，移除图中*所有* 与list中的边match 的边。  </span>
+<span class="n">removeEdges</span><span class="o">(</span><span class="n">edgesToBeRemoved</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">EV</span><span class="o">]])</span></code></pre></div>
+
+  </div>
+</div>
+
+<h2 id="section-5">邻域方法</h2>
+
+<p>邻域方法可以在端点的first-hop 的邻居上进行聚合。<code>reduceOnEdges()</code>方法可以对一个端点的相邻边的值进行聚合，<code>reduceOnNeighbors()</code> 方法可以对一个端点的相邻点的值进行聚合。这些方法的聚合具有结合性和交换性，利用了内部的组合，因此极大提升了性能。</p>
+
+<p>邻域的范围由<code>EdgeDirection</code> 这个参数指定，可选值包括<code>IN</code>,<code>OUT</code>,<code>ALL</code>。<code>IN</code> 聚合一个端点所有的入边， <code>OUT</code> 聚合一个端点所有的出边， <code>ALL</code> 聚合一个端点所有的边。</p>
+
+<p>例如，假设你想从图中每个的端点的所有出边中选出最小weight：</p>
+
+<p class="text-center">
+    <img alt="reduceOnEdges Example" width="50%" src="/1.2.0/fig/gelly-example-graph.png" />
+</p>
+
+<p>下面的代码将计算每个端点的出边，并对得到的每个邻域应用自定义的<code>SelectMinWeight()</code>函数：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;&gt;</span> <span class="n">minWeights</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="na">reduceOnEdges</span><span class="o">(</span><span class="k">new</span> <span class="nf">SelectMinWeight</span><span class="o">(),</span> <span class="n">EdgeDirection</span><span class="o">.</span><span class="na">OUT</span><span class="o">);</span>
+
+<span class="c1">// 用户自定义函数，用来选择最小weight</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">SelectMinWeight</span> <span class="kd">implements</span> <span class="n">ReduceEdgesFunction</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">&gt;</span> <span class="o">{</span>
+
+		<span class="nd">@Override</span>
+		<span class="kd">public</span> <span class="n">Double</span> <span class="nf">reduceEdges</span><span class="o">(</span><span class="n">Double</span> <span class="n">firstEdgeValue</span><span class="o">,</span> <span class="n">Double</span> <span class="n">secondEdgeValue</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">firstEdgeValue</span><span class="o">,</span> <span class="n">secondEdgeValue</span><span class="o">);</span>
+		<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">graph</span><span class="k">:</span> <span class="kt">Graph</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">minWeights</span> <span class="k">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">reduceOnEdges</span><span class="o">(</span><span class="k">new</span> <span class="nc">SelectMinWeight</span><span class="o">,</span> <span class="nc">EdgeDirection</span><span class="o">.</span><span class="nc">OUT</span><span class="o">)</span>
+
+<span class="c1">// 用户自定义函数，用来选择最小weight</span>
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SelectMinWeight</span> <span class="k">extends</span> <span class="nc">ReduceEdgesFunction</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="o">{</span>
+	<span class="k">override</span> <span class="k">def</span> <span class="n">reduceEdges</span><span class="o">(</span><span class="n">firstEdgeValue</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">secondEdgeValue</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">{</span>
+		<span class="nc">Math</span><span class="o">.</span><span class="n">min</span><span class="o">(</span><span class="n">firstEdgeValue</span><span class="o">,</span> <span class="n">secondEdgeValue</span><span class="o">)</span>
+	<span class="o">}</span>
+ <span class="o">}</span></code></pre></div>
+
+  </div>
+</div>
+
+<p class="text-center">
+    <img alt="reduceOnEdges Example" width="50%" src="/1.2.0/fig/gelly-reduceOnEdges.png" />
+</p>
+
+<p>与之类似，假设你想计算每个端点的所有in-coming 邻居端点的value之和。下面的代码计算了每个端点的in-coming 邻居，并对每个邻居端点应用自定义的<code>SumValues()</code> 函数。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">verticesWithSum</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="na">reduceOnNeighbors</span><span class="o">(</span><span class="k">new</span> <span class="nf">SumValues</span><span class="o">(),</span> <span class="n">EdgeDirection</span><span class="o">.</span><span class="na">IN</span><span class="o">);</span>
+
+<span class="c1">// 自定义函数，用于计算邻居端点的value之和  </span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">SumValues</span> <span class="kd">implements</span> <span class="n">ReduceNeighborsFunction</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	    	<span class="nd">@Override</span>
+	    	<span class="kd">public</span> <span class="n">Long</span> <span class="nf">reduceNeighbors</span><span class="o">(</span><span class="n">Long</span> <span class="n">firstNeighbor</span><span class="o">,</span> <span class="n">Long</span> <span class="n">secondNeighbor</span><span class="o">)</span> <span class="o">{</span>
+		    	<span class="k">return</span> <span class="n">firstNeighbor</span> <span class="o">+</span> <span class="n">secondNeighbor</span><span class="o">;</span>
+	  	<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">graph</span><span class="k">:</span> <span class="kt">Graph</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">verticesWithSum</span> <span class="k">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">reduceOnNeighbors</span><span class="o">(</span><span class="k">new</span> <span class="nc">SumValues</span><span class="o">,</span> <span class="nc">EdgeDirection</span><span class="o">.</span><span class="nc">IN</span><span class="o">)</span>
+
+<span class="c1">// 自定义函数，用于计算邻居端点的value之和  </span>
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SumValues</span> <span class="k">extends</span> <span class="nc">ReduceNeighborsFunction</span><span class="o">[</span><span class="kt">Long</span><span class="o">]</span> <span class="o">{</span>
+   	<span class="k">override</span> <span class="k">def</span> <span class="n">reduceNeighbors</span><span class="o">(</span><span class="n">firstNeighbor</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">secondNeighbor</span><span class="k">:</span> <span class="kt">Long</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="o">{</span>
+    	<span class="n">firstNeighbor</span> <span class="o">+</span> <span class="n">secondNeighbor</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+</div>
+
+<p class="text-center">
+    <img alt="reduceOnNeighbors Example" width="70%" src="/1.2.0/fig/gelly-reduceOnNeighbors.png" />
+</p>
+
+<p>如果聚合函数不具有结合性和交换性，或者想从每个端点返回不止一个值，可以使用<code>groupReduceOnEdges()</code>和 <code>groupReduceOnNeighbors()</code> 这两个更一般性的方法。这些方法对每个端点返回0个，1个或者多个value，而且提供对所有邻居的访问。</p>
+
+<p>例如，下面的代码将输出所有端点的pair，条件是连接它们的边的weight大于或者等于0.5：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;&gt;</span> <span class="n">vertexPairs</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="na">groupReduceOnNeighbors</span><span class="o">(</span><span class="k">new</span> <span class="nf">SelectLargeWeightNeighbors</span><span class="o">(),</span> <span class="n">EdgeDirection</span><span class="o">.</span><span class="na">OUT</span><span class="o">);</span>
+
+<span class="c1">// 用户自定函数，用来筛选用邻居端点，条件是连接它们的边的weight大于或者等于0.5  </span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">SelectLargeWeightNeighbors</span> <span class="kd">implements</span> <span class="n">NeighborsFunctionWithVertexValue</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">,</span>
+		<span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;&gt;</span> <span class="o">{</span>
+
+		<span class="nd">@Override</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">iterateNeighbors</span><span class="o">(</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">,</span>
+				<span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;&gt;</span> <span class="n">neighbors</span><span class="o">,</span>
+				<span class="n">Collector</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;&gt;</span> <span class="n">out</span><span class="o">)</span> <span class="o">{</span>
+
+			<span class="k">for</span> <span class="o">(</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">neighbor</span> <span class="o">:</span> <span class="n">neighbors</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">if</span> <span class="o">(</span><span class="n">neighbor</span><span class="o">.</span><span class="na">f0</span><span class="o">.</span><span class="na">f2</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">out</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;,</span> <span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;(</span><span class="n">vertex</span><span class="o">,</span> <span class="n">neighbor</span><span class="o">.</span><span class="na">f1</span><span class="o">));</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">graph</span><span class="k">:</span> <span class="kt">Graph</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">vertexPairs</span> <span class="k">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">groupReduceOnNeighbors</span><span class="o">(</span><span class="k">new</span> <span class="nc">SelectLargeWeightNeighbors</span><span class="o">,</span> <span class="nc">EdgeDirection</span><span class="o">.</span><span class="nc">OUT</span><span class="o">)</span>
+
+<span class="c1">// 用户自定函数，用来筛选用邻居端点，条件是连接它们的边的weight大于或者等于0.5  </span>
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SelectLargeWeightNeighbors</span> <span class="k">extends</span> <span class="nc">NeighborsFunctionWithVertexValue</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Double</span>,
+  <span class="o">(</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]</span>, <span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">])]</span> <span class="o">{</span>
+
+	<span class="k">override</span> <span class="k">def</span> <span class="n">iterateNeighbors</span><span class="o">(</span><span class="n">vertex</span><span class="k">:</span> <span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">],</span>
+		<span class="n">neighbors</span><span class="k">:</span> <span class="kt">Iterable</span><span class="o">[(</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Double</span><span class="o">]</span>, <span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">])],</span>
+		<span class="n">out</span><span class="k">:</span> <span class="kt">Collector</span><span class="o">[(</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]</span>, <span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">])])</span> <span class="k">=</span> <span class="o">{</span>
+
+			<span class="k">for</span> <span class="o">(</span><span class="n">neighbor</span> <span class="k">&lt;-</span> <span class="n">neighbors</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">if</span> <span class="o">(</span><span class="n">neighbor</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">getValue</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">out</span><span class="o">.</span><span class="n">collect</span><span class="o">(</span><span class="n">vertex</span><span class="o">,</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">_2</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+   <span class="o">}</span></code></pre></div>
+
+  </div>
+</div>
+
+<p>如果计算聚合值不需要访问端点的value （聚合计算应用在它身上），推荐使用两个效率更高的函数<code>EdgesFunction</code> 和 <code>NeighborsFunction</code>，或者是用户自定义的函数。如果需要访问端点的value，那么就应该使用<code>EdgesFunctionWithVertexValue</code> 和 <code>NeighborsFunctionWithVertexValue</code>。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="section-6">图的校验</h2>
+
+<p>Gelly 提供一种简单的工具来检测输入的图形的合法性。随着应用语境的变化，以某个标准衡量，一个图形既可能合法也可能不合法。例如，用户可能需要检查图形是否包含重复边，或者图的结构是否是二分的。要检查图的合法性，可以自己定义 <code>GraphValidator</code>并实现它的<code>validate()</code>方法。<code>InvalidVertexIdsValidator</code>是Gelly 中预定义的validator。它检测边的集合包含了合法的端点ID，换言之，所有边的ID 在端点的ID 集合中也存在。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// create a list of vertices with IDs = {1, 2, 3, 4, 5}</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">vertices</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1">// create a list of edges with IDs = {(1, 2) (1, 3), (2, 4), (5, 6)}</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">edges</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">Graph</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">);</span>
+
+<span class="c1">// will return false: 6 is an invalid ID</span>
+<span class="n">graph</span><span class="o">.</span><span class="na">validate</span><span class="o">(</span><span class="k">new</span> <span class="n">InvalidVertexIdsValidator</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;());</span></code></pre></div>
+
+  </div>
+
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="c1">// create a list of vertices with IDs = {1, 2, 3, 4, 5}</span>
+<span class="k">val</span> <span class="n">vertices</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Vertex</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="c1">// create a list of edges with IDs = {(1, 2) (1, 3), (2, 4), (5, 6)}</span>
+<span class="k">val</span> <span class="n">edges</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Edge</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">graph</span> <span class="k">=</span> <span class="nc">Graph</span><span class="o">.</span><span class="n">fromCollection</span><span class="o">(</span><span class="n">vertices</span><span class="o">,</span> <span class="n">edges</span><span class="o">,</span> <span class="n">env</span><span class="o">)</span>
+
+<span class="c1">// will return false: 6 is an invalid ID</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">validate</span><span class="o">(</span><span class="k">new</span> <span class="nc">InvalidVertexIdsValidator</span><span class="o">[</span><span class="kt">Long</span>, <span class="kt">Long</span>, <span class="kt">Long</span><span class="o">])</span></code></pre></div>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+
+ <div class="footer">
+  发现错误？想参与编辑？
+  <a href="https://github.com/flink-china/flink-china-doc/edit/1.2.0/dev/libs/gelly/graph_api.md" target="_blank">
+    在 Github 上编辑此页！
+  </a>
+</div>
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.2.0/page/js/flink.js"></script>
+
+   <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

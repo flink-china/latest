@@ -1,0 +1,3306 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.2 Documentation: 优化</title>
+    <link rel="shortcut icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/codetabs.css">
+    <link rel="stylesheet" href="/1.2.0/page/font-awesome/css/font-awesome.min.css">
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']] },
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" } }
+        });
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sidenav-logo">
+  <p><a href="/1.2.0"><img class="bottom" alt="Apache Flink" src="/1.2.0/page/img/navbar-brand-logo.jpg"></a> v1.2</p>
+</div>
+<ul id="sidenav">
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/index.html"><i class="fa fa-home title" aria-hidden="true"></i> 首页</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-2" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/concepts/programming-model.html">编程模型</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/concepts/runtime.html">Distributed Runtime</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/setup_quickstart.html"><i class="fa fa-power-off title appetizer" aria-hidden="true"></i> 快速起步</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-7" data-toggle="collapse"><i class="fa fa-file-code-o title appetizer" aria-hidden="true"></i> 示例 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-7"><ul>
+  <li><a href="/1.2.0/examples/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/run_example_quickstart.html">Monitoring Wikipedia Edits</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/examples.html">Batch Examples</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-11" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> 建立工程 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-11"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/java_api_quickstart.html">Java 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/scala_api_quickstart.html">Scala 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking_with_flink.html">Linking with Flink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/ide_setup.html">IDE Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_shell.html">Scala REPL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking.html">关联可选模块</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/flink_on_windows.html">Running Flink on Windows</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/building.html">Building Flink from Source</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-21" data-toggle="collapse"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-21"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-22" data-toggle="collapse">Basic API Concepts <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+  <li><a href="/1.2.0/dev/api_concepts.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_api_extensions.html">Scala API Extensions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/java8.html">Java 8</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-26" data-toggle="collapse">Streaming (DataStream API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-26"><ul>
+  <li><a href="/1.2.0/dev/datastream_api.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/dev/windows.html">Windows</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-28" data-toggle="collapse">Event Time <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+  <li><a href="/1.2.0/dev/event_time.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamps_watermarks.html">Generating Timestamps / Watermarks</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamp_extractors.html">预定义的 Timestamp Extractors / Watermark Emitters</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-32" data-toggle="collapse">Connectors <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-32"><ul>
+  <li><a href="/1.2.0/dev/connectors/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/guarantees.html">Fault Tolerance Guarantees</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kafka.html">Kafka</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/cassandra.html">Cassandra</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kinesis.html">Kinesis</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/filesystem_sink.html">Rolling File Sink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/nifi.html">NiFi</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/twitter.html">Twitter</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/process_function.html">过程函数</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/side_output.html">Side Outputs</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/state.html">Working with State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/checkpointing.html">Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/asyncio.html">Async I/O</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/queryable_state.html">Queryable State</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-50" data-toggle="collapse">批 (DataSet API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-50"><ul>
+  <li><a href="/1.2.0/dev/batch/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/dataset_transformations.html">Transformations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/iterations.html">Iterations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/fault_tolerance.html">Fault Tolerance</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/python.html">Python API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/connectors.html">Connectors</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/hadoop_compatibility.html">Hadoop Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/local_execution.html">Local Execution</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/cluster_execution.html">Cluster Execution</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-61" data-toggle="collapse">数据类型和序列化 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-61"><ul>
+  <li><a href="/1.2.0/dev/types_serialization.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/custom_serializers.html">Custom Serializers</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-64" data-toggle="collapse">Managing Execution <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-64"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_configuration.html">Execution Configuration</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/packaging.html">Program Packaging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/parallel.html">并行执行</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_plans.html">执行计划</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/restart_strategies.html">Restart Strategies</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-71" data-toggle="collapse">Libraries <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-71"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/table_api.html">Table and SQL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/cep.html">Event Processing (CEP)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/storm_compatibility.html">Storm Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-75" data-toggle="collapse">Graphs: Gelly <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-75"><ul>
+  <li><a href="/1.2.0/dev/libs/gelly/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_api.html">Graph API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/library_methods.html">Library Methods</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-83" data-toggle="collapse">机器学习 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-83"><ul>
+  <li><a href="/1.2.0/dev/libs/ml/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/quickstart.html">快速入门</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">多元线性回归</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/cross_validation.html">交叉验证</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/distance_metrics.html">距离度量</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/knn.html">K近邻算法（KNN）</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/min_max_scaler.html">最小最大值标准化</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/contribution_guide.html">贡献指南</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/pipelines.html">Pipelines</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/polynomial_features.html">多项式特征转换</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/als.html">ALS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/sos.html">Stochastic Outlier Selection</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/standard_scaler.html">标准化缩放</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/svm.html">支持向量机（SVM using CoCoA）</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/best_practices.html">Best Practices</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/migration.html">API Migration Guides</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-102" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> 部署与运维 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-102"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/setup/config.html">Configuration</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cli.html">CLI</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-105" data-toggle="collapse">Clusters & Deployment <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-105"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cluster_setup.html">Standalone Cluster</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/yarn_setup.html">YARN</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mesos.html">Mesos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/aws.html">AWS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/gce_setup.html">Google Compute Engine</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mapr_setup.html">MapR</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/jobmanager_high_availability.html">High Availability (HA)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/checkpoints.html">Checkpoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/savepoints.html">Savepoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/security-ssl.html">SSL Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/security-kerberos.html">Kerberos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/upgrading.html">Upgrading Applications and Flink Versions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/production_ready.html">生产环境检查清单</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-121" data-toggle="collapse"><i class="fa fa-bug title maindish" aria-hidden="true"></i> 调试与监控 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/metrics.html">Metrics</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/logging.html">Logging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/historyserver.html">History Server</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/checkpoint_monitoring.html">Monitoring Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/back_pressure.html">Monitoring Back Pressure</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/rest_api.html">Monitoring REST API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/large_state_tuning.html">Debugging and Tuning Checkpoints and Large State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_event_time.html">Debugging Windows & Event Time</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_classloading.html">Debugging Classloading</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/application_profiling.html">Application Profiling</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-133" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内部原理 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/components.html">Component Stack</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/task_lifecycle.html">Task Lifecycle</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/filesystems.html">File Systems</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+<li><a href="/1.2.0/about/index.html"><i class="fa fa-fire title hot" aria-hidden="true"></i> 参与贡献</a></li>
+    
+  
+
+  
+    
+      
+  <li class="divider"></li>
+  <li><a href="http://flink-china.org"><i class="fa fa-external-link title" aria-hidden="true"></i> 项目页面</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="/1.2.0/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="搜索文档">
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <li><a href="http://doc.flink-china.org/1.1.0/">v1.1</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+        </div>
+        <div class="col-lg-9 content">
+          
+          
+
+<!--Some of the Latex math notation has been adapted from Apache Spark MLlib's documentation-->
+$$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\av}{\mathbf{\alpha}}
+\newcommand{\bv}{\mathbf{b}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\id}{\mathbf{I}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\unit}{\mathbf{e}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand\rfrac[2]{^{#1}\!/_{#2}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+$$
+          
+
+          
+
+
+
+
+
+  
+  
+    
+
+
+
+<ol class="breadcrumb">
+
+  
+  
+    <li class="active">优化</li>
+  
+
+</ol>
+
+<h1>优化</h1>
+
+
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">数学公式</a>    <ul>
+      <li><a href="#section-1" id="markdown-toc-section-1">损失函数</a></li>
+      <li><a href="#section-2" id="markdown-toc-section-2">正则化类型</a></li>
+    </ul>
+  </li>
+  <li><a href="#stochastic-gradient-descent" id="markdown-toc-stochastic-gradient-descent">随机梯度下降 (Stochastic Gradient Descent)</a>    <ul>
+      <li><a href="#section-3" id="markdown-toc-section-3">参数</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">正则化</a></li>
+      <li><a href="#section-5" id="markdown-toc-section-5">损失函数</a></li>
+      <li><a href="#section-8" id="markdown-toc-section-8">例子</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="section">数学公式</h2>
+
+<p>FlinkML 中的优化框架是一个面向开发人员的包，这个包可以解决机器学习任务中经常遇到的<a href="https://en.wikipedia.org/wiki/Mathematical_optimization">优化</a>问题。在谈论监督式学习时，这涉及找到一个模型，用一组参数 $w$ 定义，该模型能够在给定一组 $(\x, y)$ 例子的情况下最小化 $f(\wv)$，这里$\x$是一个特征向量，而 $y$ 是一个表征一个回归模型的实数值或分类模型的类别标签的实数。在监督式学习中，需要被最小化的函数通常是以下形式：</p>
+
+<p>\begin{equation} \label{eq:objectiveFunc}
+    f(\wv) :=
+    \frac1n \sum_{i=1}^n L(\wv;\x_i,y_i) +
+    \lambda\, R(\wv)
+    \ .
+\end{equation}</p>
+
+<p>这里 $L$ 是损失函数，而$R(\wv)$是正则化惩罚 (regularization penalty)。我们使用 $L$ 来衡量一个模型对观察数据的拟合有多好，并且我们使用 $R$ 来影响对一个模型的复杂度损失 (complexity cost)，其中 $\lambda &gt; 0$ 是正则化惩罚。</p>
+
+<h3 id="section-1">损失函数</h3>
+
+<p>在监督式学习中，我们用损失函数来衡量模型的拟合程度，损失函数通过对比模型做出的预测 $p$ 和每个实例的真值 $y$ 来惩罚错误。不同的损失函数可以被回归任务 (比如平方损失) 和分类任务 (比如转折点损失(hinge loss))。</p>
+
+<p>常用的损失函数有：</p>
+
+<ul>
+  <li>平方损失: $ \frac{1}{2} \left(\wv^T \cdot \x - y\right)^2, \quad y \in \R $</li>
+  <li>转折点损失: $ \max \left(0, 1 - y ~ \wv^T \cdot \x\right), \quad y \in {-1, +1} $</li>
+  <li>逻辑损失: $ \log\left(1+\exp\left( -y ~ \wv^T \cdot \x\right)\right), \quad y \in {-1, +1}$</li>
+</ul>
+
+<h3 id="section-2">正则化类型</h3>
+
+<p>机器学习中的[正则化] (https://en.wikipedia.org/wiki/Regularization_(mathematics)) 会惩罚需要被评价的模型，为了减少过拟合，最常见的惩罚是 $L_1$ 和 $L_2$ 惩罚，定义如下：</p>
+
+<ul>
+  <li>$L_1$: $R(\wv) = \norm{\wv}_1$</li>
+  <li>$L_2$: $R(\wv) = \frac{1}{2}\norm{\wv}_2^2$</li>
+</ul>
+
+<p>$L_2$ 惩罚会惩罚大权重，比起含若干大权重的解决方法，它更倾向含更多小权重的解决方案。
+$L_1$ 惩罚能用来归零解决方案中的系数 (solution coefficients)，所以会产生稀疏的解决方案。
+$\eqref{eq:objectiveFunc}$ 中的正则化常数 $\lambda$ 决定了用在模型上的正则化数量，该常数经常通过交叉验证模型决定。
+关于比较好的正则化类型的对比，可以参阅<a href="http://www.robotics.stanford.edu/~ang/papers/icml04-l1l2.pdf">这</a>篇由 Andrew Ng 发表的论文
+至于什么样的正则化类型会被支持，取决于实际使用的优化算法。</p>
+
+<h2 id="stochastic-gradient-descent">随机梯度下降 (Stochastic Gradient Descent)</h2>
+
+<p>为了找到一个 (局部) 最小值，梯度下降法会朝着与当前参数 (权重) 相关 $\eqref{eq:objectiveFunc}$ 函数的梯度相反的方向的下降。
+为了计算精确的梯度，我们需要对一个数据集里的所有点进行一次传递 (one pass)，让整个过程的计算量增大。
+另一个替代的方案是随机梯度下降，在随机梯度下降中我们每一轮迭代都从完整的数据集中采集一个点，并通过在线方式对每个点更新参数。</p>
+
+<p>在小批次的随机梯度下降中，我们则从一个数据集中采样随机数据集，并在每一批次上计算梯度。在算法的每一轮迭代中我们根据从每一个批次中计算得到的梯度，对权重只更新一次。</p>
+
+<p>一个重要的参数是学习率 $\eta$，或者称为步长 (step size)，该参数可由以下列出的五个方法之一决定。
+初始步长的设定会对算法的表现有重要的影响。如果想要知道一些实际运用中的指导，清参与 Leon Botou 的 “<a href="http://research.microsoft.com/pubs/192769/tricks-2012.pdf">Stochastic Gradient Descent Tricks</a>“。</p>
+
+<p>目前随机梯度下降的实现使用所有的分区，这样能让一批次的梯度下降变更加有效。只要一个采集操作被引入到 Flink 中，真实的小批次随机梯度下降算法就会被执行。</p>
+
+<h3 id="section-3">参数</h3>
+
+<p> 随机梯度下降的实现可以由以下参数控制：</p>
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left" style="width: 20%">参数</th>
+        <th class="text-center">描述</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>正则化惩罚</strong></td>
+        <td>
+          <p>
+            要应用的正则化方程. (默认值: <strong>NoRegularization</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>正则化常数</strong></td>
+        <td>
+          <p>
+            使用的正则化量. (默认值: <strong>0.1</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>损失函数</strong></td>
+        <td>
+          <p>
+            要被优化的损失函数. (默认值: <strong>None</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>迭代数</strong></td>
+        <td>
+          <p>
+            最大迭代次数. (默认值: <strong>10</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>学习率</strong></td>
+        <td>
+          <p>
+            梯度下降法中的初始学习率.
+            这个值控制了梯度下降法要沿着梯度的反方向移多远.
+            (默认值: <strong>0.1</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>聚合阀值</strong></td>
+        <td>
+          <p>
+            当被设置时，如果目标函数 $\eqref{eq:objectiveFunc}$ 的值的相对变化量小于提供的阀值 $\tau$，则迭代停止
+            聚合的标准定义如下：$\left| \frac{f(\wv)_{i-1} - f(\wv)_i}{f(\wv)_{i-1}}\right| &lt; \tau$.
+            (默认值: <strong>None</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>学习率方法</strong></td>
+        <td>
+          <p>
+            (默认值: <strong>LearningRateMethod.Default</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>衰退值</strong></td>
+        <td>
+          <p>
+            (默认值: <strong>0.0</strong>)
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<h3 id="section-4">正则化</h3>
+
+<p>FlinkML 支持含 L1, L2 和无正则化的随机梯度下降。正则化类型必须实现 <code>RegularizationPenalty</code> 接口，该接口根据梯度和正则化类型计算新的权重。
+下表包含了支持的正则化函数。</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">类别名称</th>
+      <th class="text-center">正则化函数 $R(\wv)$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>无正则化</strong></td>
+      <td>$R(\wv) = 0$</td>
+    </tr>
+    <tr>
+      <td><strong>L1正则化</strong></td>
+      <td>$R(\wv) = \norm{\wv}_1$</td>
+    </tr>
+    <tr>
+      <td><strong>L2正则化</strong></td>
+      <td>$R(\wv) = \frac{1}{2}\norm{\wv}_2^2$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="section-5">损失函数</h3>
+
+<p>需要被最小化的损失函数需要实现 <code>LossFunction</code> 接口，该接口定义了计算损失及其梯度的方法。
+任何一个定义了自己 <code>LossFunction</code> 或使用  <code>GenericLossFunction</code> 类会从一个偏损失函数和一个预测函数构造损失函数。
+以下是一个实例：</p>
+
+<div class="highlight"><pre><code class="language-Scala"><span class="k">val</span> <span class="n">lossFunction</span> <span class="k">=</span> <span class="nc">GenericLossFunction</span><span class="o">(</span><span class="nc">SquaredLoss</span><span class="o">,</span> <span class="nc">LinearPrediction</span><span class="o">)</span></code></pre></div>
+<p>支持的偏损失函数请参阅<a href="#partial-loss-function-values">此处</a>.
+支持的预测函数请参阅<a href="#prediction-function-values">here</a>.</p>
+
+<h4 id="partial-loss-function-">偏随机函数 (Partial Loss Function) 值</h4>
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left" style="width: 20%">函数名</th>
+        <th class="text-center">描述</th>
+        <th class="text-center">损失</th>
+        <th class="text-center">损失导数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>平方损失</strong></td>
+        <td>
+          <p>
+            回归任务中最常用的损失函数.
+          </p>
+        </td>
+        <td class="text-center">$\frac{1}{2} (\wv^T \cdot \x - y)^2$</td>
+        <td class="text-center">$\wv^T \cdot \x - y$</td>
+      </tr>
+      <tr>
+        <td><strong>逻辑损失</strong></td>
+        <td>
+          <p>
+            分类任务中最常用的损失函数.
+          </p>
+        </td>
+        <td class="text-center">$\log\left(1+\exp\left( -y ~ \wv^T \cdot \x\right)\right), \quad y \in \{-1, +1\}$</td>
+        <td class="text-center">$\frac{-y}{1+\exp\left(y ~ \wv^T \cdot \x\right)}$</td>
+      </tr>
+      <tr>
+        <td><strong>转折点损失</strong></td>
+        <td>
+          <p>
+            可用于分类任务的损失函数.
+          </p>
+        </td>
+        <td class="text-center">$\max \left(0, 1 - y ~ \wv^T \cdot \x\right), \quad y \in \{-1, +1\}$</td>
+        <td class="text-center">$\begin{cases}
+                                 -y&amp;\text{if } y ~ \wv^T &lt;= 1 \\
+                                 0&amp;\text{if } y ~ \wv^T &gt; 1
+                                 \end{cases}$</td>
+      </tr>
+    </tbody>
+  </table>
+
+<h4 id="section-6">预测函数值</h4>
+
+<table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-left" style="width: 20%">函数名</th>
+          <th class="text-center">描述</th>
+          <th class="text-center">预测</th>
+          <th class="text-center">预测梯度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>线性预测</strong></td>
+          <td>
+            <p>
+              线性模型比如线性回归和线性分类最常用的函数.
+            </p>
+          </td>
+          <td class="text-center">$\x^T \cdot \wv$</td>
+          <td class="text-center">$\x$</td>
+        </tr>
+      </tbody>
+    </table>
+
+<h4 id="section-7">有效学习率</h4>
+
+<p>这里:</p>
+
+<ul>
+  <li>
+    <p>$j$ 是迭代数</p>
+  </li>
+  <li>
+    <p>$\eta_j$ 是每一步 $j$ 的步长</p>
+  </li>
+  <li>
+    <p>$\eta_0$ 是初始学习率</p>
+  </li>
+  <li>
+    <p>$\lambda$ 是正则化常量</p>
+  </li>
+  <li>
+    <p>$\tau$ 是衰退常量, 该常量会使得学习率变成一个递减函数 $j$，也就是说，随着迭代次数的增加，学习率会衰减。衰减的精准率是由函数特定的，请参阅 <strong>反缩放 (Inverse Scaling) ** 和 </strong>Wei Xu 方法 (Wei Xu’s Method)** (该方法是 <strong>反缩放</strong> 方法的一个延伸)。</p>
+  </li>
+</ul>
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left" style="width: 20%">函数名</th>
+        <th class="text-center">描述</th>
+        <th class="text-center">函数</th>
+        <th class="text-center">称呼为</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>默认</strong></td>
+        <td>
+          <p>
+            决定步长的默认方法。该方法相当于当 $\tau$ = 0.5 时的 inverse scaling 方法。默认保留该特殊情况来为保持向后兼容性.
+          </p>
+        </td>
+        <td class="text-center">$\eta_j = \eta_0/\sqrt{j}$</td>
+        <td class="text-center"><code>LearningRateMethod.Default</code></td>
+      </tr>
+      <tr>
+        <td><strong>常数</strong></td>
+        <td>
+          <p>
+            步长在整个学习任务中保持不变.
+          </p>
+        </td>
+        <td class="text-center">$\eta_j = \eta_0$</td>
+        <td class="text-center"><code>LearningRateMethod.Constant</code></td>
+      </tr>
+      <tr>
+        <td><strong>Leon Bottou 方法</strong></td>
+        <td>
+          <p>
+            这是 sklearn 中 <code>"最优的"</code> 方法.
+            这个最优初始值必须被提供。
+            Sklearn 使用下列启发法: $t_0 = \max(1.0, L^\prime(-\beta, 1.0) / (\alpha \cdot \beta)$.
+            其中 $\beta = \sqrt{\frac{1}{\sqrt{\alpha}}}$ 且 $L^\prime(prediction, truth)$ 是损失函数的导数.
+          </p>
+        </td>
+        <td class="text-center">$\eta_j = 1 / (\lambda \cdot (t_0 + j -1)) $</td>
+        <td class="text-center"><code>LearningRateMethod.Bottou</code></td>
+      </tr>
+      <tr>
+        <td><strong>反缩放</strong></td>
+        <td>
+          <p>
+            一个决定步长的非常常用的方法.
+          </p>
+        </td>
+        <td class="text-center">$\eta_j = \eta_0 / j^{\tau}$</td>
+        <td class="text-center"><code>LearningRateMethod.InvScaling</code></td>
+      </tr>
+      <tr>
+        <td><strong>Wei Xu 方法</strong></td>
+        <td>
+          <p>
+            由 Wei Xu 在 <a href="http://arxiv.org/pdf/1107.2490.pdf">Towards Optimal One Pass Large Scale Learning with Averaged Stochastic Gradient Descent</a> 的方法
+          </p>
+        </td>
+        <td class="text-center">$\eta_j = \eta_0 \cdot (1+ \lambda \cdot \eta_0 \cdot j)^{-\tau} $</td>
+        <td class="text-center"><code>LearningRateMethod.Xu</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+<h3 id="section-8">例子</h3>
+
+<p>在随机梯度下降的 Flink 实现中，假如在一个 <code>DataSet[LabeledVector]</code> 给定一组实例，并选择性地给定一些初始初始权重，我们可以使用 <code>GradientDescent.optimize()</code> 来找到给定数据的最优权重。</p>
+
+<p>用户能提供一个包含 <code>WeightVector</code> 元素的初始的 <code>DataSet[WeightVector]</code>，或者使用所有集合均为0的默认权重。
+一个 <code>WeightVector</code> 就是一个含权重的容器类 (container class)，这个类把截距从权重向量中分离出来。这允许我们避免把正则化运用到截距上。</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 创建一个随机梯度下降实例</span>
+<span class="k">val</span> <span class="n">sgd</span> <span class="k">=</span> <span class="nc">GradientDescent</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">setLossFunction</span><span class="o">(</span><span class="nc">SquaredLoss</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">setRegularizationPenalty</span><span class="o">(</span><span class="n">L1Regularization</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setRegularizationConstant</span><span class="o">(</span><span class="mf">0.2</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setIterations</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setLearningRate</span><span class="o">(</span><span class="mf">0.01</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setLearningRateMethod</span><span class="o">(</span><span class="nc">LearningRateMethod</span><span class="o">.</span><span class="nc">Xu</span><span class="o">(-</span><span class="mf">0.75</span><span class="o">))</span>
+
+
+<span class="c1">// 获取数据</span>
+<span class="k">val</span> <span class="n">trainingDS</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">LabeledVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="c1">// 根据所提供的数据优化权重</span>
+<span class="k">val</span> <span class="n">weightDS</span> <span class="k">=</span> <span class="n">sgd</span><span class="o">.</span><span class="n">optimize</span><span class="o">(</span><span class="n">trainingDS</span><span class="o">)</span></code></pre></div>
+
+
+
+ <div class="footer">
+  发现错误？想参与编辑？
+  <a href="https://github.com/flink-china/flink-china-doc/edit/1.2.0/dev/libs/ml/optimization.md" target="_blank">
+    在 Github 上编辑此页！
+  </a>
+</div>
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.2.0/page/js/flink.js"></script>
+
+   <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

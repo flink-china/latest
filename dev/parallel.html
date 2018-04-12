@@ -1,0 +1,3109 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.2 Documentation: 并行执行</title>
+    <link rel="shortcut icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.2.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.2.0/page/css/codetabs.css">
+    <link rel="stylesheet" href="/1.2.0/page/font-awesome/css/font-awesome.min.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3">
+          
+
+
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+    
+  
+
+  
+    
+    
+    
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sidenav-logo">
+  <p><a href="/1.2.0"><img class="bottom" alt="Apache Flink" src="/1.2.0/page/img/navbar-brand-logo.jpg"></a> v1.2</p>
+</div>
+<ul id="sidenav">
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/index.html"><i class="fa fa-home title" aria-hidden="true"></i> 首页</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-2" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/concepts/programming-model.html">编程模型</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/concepts/runtime.html">Distributed Runtime</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/setup_quickstart.html"><i class="fa fa-power-off title appetizer" aria-hidden="true"></i> 快速起步</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-7" data-toggle="collapse"><i class="fa fa-file-code-o title appetizer" aria-hidden="true"></i> 示例 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-7"><ul>
+  <li><a href="/1.2.0/examples/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/run_example_quickstart.html">Monitoring Wikipedia Edits</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/examples.html">Batch Examples</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-11" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> 建立工程 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-11"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/java_api_quickstart.html">Java 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/quickstart/scala_api_quickstart.html">Scala 的样例工程</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking_with_flink.html">Linking with Flink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/ide_setup.html">IDE Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_shell.html">Scala REPL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/linking.html">关联可选模块</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/flink_on_windows.html">Running Flink on Windows</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/building.html">Building Flink from Source</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-21" data-toggle="collapse" class="active"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</a><div class="collapse in" id="collapse-21"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-22" data-toggle="collapse">Basic API Concepts <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+  <li><a href="/1.2.0/dev/api_concepts.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/scala_api_extensions.html">Scala API Extensions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/java8.html">Java 8</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-26" data-toggle="collapse">Streaming (DataStream API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-26"><ul>
+  <li><a href="/1.2.0/dev/datastream_api.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/dev/windows.html">Windows</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-28" data-toggle="collapse">Event Time <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+  <li><a href="/1.2.0/dev/event_time.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamps_watermarks.html">Generating Timestamps / Watermarks</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/event_timestamp_extractors.html">预定义的 Timestamp Extractors / Watermark Emitters</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-32" data-toggle="collapse">Connectors <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-32"><ul>
+  <li><a href="/1.2.0/dev/connectors/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/guarantees.html">Fault Tolerance Guarantees</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kafka.html">Kafka</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/cassandra.html">Cassandra</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/kinesis.html">Kinesis</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/filesystem_sink.html">Rolling File Sink</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/nifi.html">NiFi</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/connectors/twitter.html">Twitter</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/process_function.html">过程函数</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/side_output.html">Side Outputs</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/state.html">Working with State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/checkpointing.html">Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/asyncio.html">Async I/O</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/stream/queryable_state.html">Queryable State</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-50" data-toggle="collapse">批 (DataSet API) <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-50"><ul>
+  <li><a href="/1.2.0/dev/batch/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/dataset_transformations.html">Transformations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/iterations.html">Iterations</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/fault_tolerance.html">Fault Tolerance</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/python.html">Python API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/connectors.html">Connectors</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/batch/hadoop_compatibility.html">Hadoop Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/local_execution.html">Local Execution</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/cluster_execution.html">Cluster Execution</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-61" data-toggle="collapse">数据类型和序列化 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-61"><ul>
+  <li><a href="/1.2.0/dev/types_serialization.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/custom_serializers.html">Custom Serializers</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-64" data-toggle="collapse" class="active">Managing Execution</a><div class="collapse in" id="collapse-64"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_configuration.html">Execution Configuration</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/packaging.html">Program Packaging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/parallel.html" class="active">并行执行</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/execution_plans.html">执行计划</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/restart_strategies.html">Restart Strategies</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-71" data-toggle="collapse">Libraries <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-71"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/table_api.html">Table and SQL</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/cep.html">Event Processing (CEP)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/storm_compatibility.html">Storm Compatibility</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-75" data-toggle="collapse">Graphs: Gelly <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-75"><ul>
+  <li><a href="/1.2.0/dev/libs/gelly/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_api.html">Graph API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/library_methods.html">Library Methods</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-83" data-toggle="collapse">机器学习 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-83"><ul>
+  <li><a href="/1.2.0/dev/libs/ml/index.html">Overview</a></li>
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/quickstart.html">快速入门</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/multiple_linear_regression.html">多元线性回归</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/cross_validation.html">交叉验证</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/distance_metrics.html">距离度量</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/knn.html">K近邻算法（KNN）</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/min_max_scaler.html">最小最大值标准化</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/contribution_guide.html">贡献指南</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/pipelines.html">Pipelines</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/polynomial_features.html">多项式特征转换</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/als.html">ALS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/sos.html">Stochastic Outlier Selection</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/standard_scaler.html">标准化缩放</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/libs/ml/svm.html">支持向量机（SVM using CoCoA）</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/best_practices.html">Best Practices</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/dev/migration.html">API Migration Guides</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-102" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> 部署与运维 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-102"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+<li><a href="/1.2.0/setup/config.html">Configuration</a></li>
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cli.html">CLI</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-105" data-toggle="collapse">Clusters & Deployment <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-105"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/cluster_setup.html">Standalone Cluster</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/yarn_setup.html">YARN</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mesos.html">Mesos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/aws.html">AWS</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/gce_setup.html">Google Compute Engine</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/mapr_setup.html">MapR</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/jobmanager_high_availability.html">High Availability (HA)</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/checkpoints.html">Checkpoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/savepoints.html">Savepoints</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/setup/security-ssl.html">SSL Setup</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/security-kerberos.html">Kerberos</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/upgrading.html">Upgrading Applications and Flink Versions</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/ops/production_ready.html">生产环境检查清单</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-121" data-toggle="collapse"><i class="fa fa-bug title maindish" aria-hidden="true"></i> 调试与监控 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/metrics.html">Metrics</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/logging.html">Logging</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/historyserver.html">History Server</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/checkpoint_monitoring.html">Monitoring Checkpointing</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/back_pressure.html">Monitoring Back Pressure</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/rest_api.html">Monitoring REST API</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/large_state_tuning.html">Debugging and Tuning Checkpoints and Large State</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_event_time.html">Debugging Windows & Event Time</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/debugging_classloading.html">Debugging Classloading</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/monitoring/application_profiling.html">Application Profiling</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+      
+      
+        
+        
+<li><a href="#collapse-133" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内部原理 <i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+  
+        
+        
+        
+
+        
+        
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/components.html">Component Stack</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/task_lifecycle.html">Task Lifecycle</a></li>
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+<li><a href="/1.2.0/internals/filesystems.html">File Systems</a></li>
+    
+  
+
+  
+    
+      
+      
+</li></ul></div>
+      
+      
+    
+  
+
+  
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <hr class="section-break"></hr>
+
+    
+    
+<li><a href="/1.2.0/about/index.html"><i class="fa fa-fire title hot" aria-hidden="true"></i> 参与贡献</a></li>
+    
+  
+
+  
+    
+      
+  <li class="divider"></li>
+  <li><a href="http://flink-china.org"><i class="fa fa-external-link title" aria-hidden="true"></i> 项目页面</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="/1.2.0/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="搜索文档">
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <li><a href="http://doc.flink-china.org/1.1.0/">v1.1</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+        </div>
+        <div class="col-lg-9 content">
+          
+
+          
+
+
+
+
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+
+
+
+<ol class="breadcrumb">
+
+  
+  
+    <li><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发</li>
+  
+
+  
+  
+    <li>Managing Execution</li>
+  
+
+  
+  
+    <li class="active">并行执行</li>
+  
+
+</ol>
+
+<h1>并行执行</h1>
+
+
+
+<p>本节描述了如何在Flink中配置程序的并行执行。一个Flink程序由多个任务组成(变换/操作符, 数据源和 sinks)。
+一个任务被切分为多个并行的实例来执行，而每一个并行的实例处理任务输入数据的一个子集。
+一个任务的并行实例数目就被称为该任务的并行度。</p>
+
+<p>如果你想使用<a href="/1.2.0/setup/savepoints.html">savepoints</a>，你应该同时考虑设置最大的并行度。当从一个savepoint点
+恢复时，你可以改变特定算子或着整个程序的并行度，同时这个设置指定了并行度的上限。为了不降低性能，这个设置是必须的；因为Flink 内部将状态划分为key-groups，但我们不能无限制的增加key-groups。</p>
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">设置并行度</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">算子层次</a>    <ul>
+      <li><a href="#section-2" id="markdown-toc-section-2">执行环境层次</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">客户端层次</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">系统层次</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-5" id="markdown-toc-section-5">设置最大并行度</a></li>
+</ul>
+
+<h2 id="section">设置并行度</h2>
+
+<p>一个任务的并行度可以从多个层次指定：</p>
+
+<h2 id="section-1">算子层次</h2>
+
+<p>一个算子、数据源和sink的并行度可以通过调用 <code>setParallelism()</code>方法来指定。就像这样：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="o">[...]</span>
+<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">wordCounts</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="nf">LineSplitter</span><span class="o">())</span>
+    <span class="o">.</span><span class="na">keyBy</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">timeWindow</span><span class="o">(</span><span class="n">Time</span><span class="o">.</span><span class="na">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">sum</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">setParallelism</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+
+<span class="n">wordCounts</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+
+<span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&quot;Word Count Example&quot;</span><span class="o">);</span></code></pre></div>
+
+  </div>
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">StreamExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">text</span> <span class="k">=</span> <span class="o">[</span><span class="kt">...</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">wordCounts</span> <span class="k">=</span> <span class="n">text</span>
+    <span class="o">.</span><span class="n">flatMap</span><span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="o">}</span> <span class="o">}</span>
+    <span class="o">.</span><span class="n">keyBy</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">timeWindow</span><span class="o">(</span><span class="nc">Time</span><span class="o">.</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+    <span class="o">.</span><span class="n">sum</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">setParallelism</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+<span class="n">wordCounts</span><span class="o">.</span><span class="n">print</span><span class="o">()</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">execute</span><span class="o">(</span><span class="s">&quot;Word Count Example&quot;</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<h3 id="section-2">执行环境层次</h3>
+
+<p>就像<a href="/1.2.0/dev/api_concepts.html#anatomy-of-a-flink-program">这里</a>描述的，Flink程序运行在执行环境的
+上下文中。执行环境为所有执行的算子、数据源、data sink定义了一个默认的并行度。执行环境的并行度可以通过显式配置
+算子的并行度而被重写。</p>
+
+<p>执行环境的默认并行度可以通过调用<code>setParallelism()</code>方法指定。为了以并行度3来执行所有的算子、数据源和data sink，
+可以通过如下的方式设置执行环境的并行度：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">env</span><span class="o">.</span><span class="na">setParallelism</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+
+<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="o">[...]</span>
+<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">wordCounts</span> <span class="o">=</span> <span class="o">[...]</span>
+<span class="n">wordCounts</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+
+<span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&quot;Word Count Example&quot;</span><span class="o">);</span></code></pre></div>
+
+  </div>
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">StreamExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+<span class="n">env</span><span class="o">.</span><span class="n">setParallelism</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">text</span> <span class="k">=</span> <span class="o">[</span><span class="kt">...</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">wordCounts</span> <span class="k">=</span> <span class="n">text</span>
+    <span class="o">.</span><span class="n">flatMap</span><span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="o">}</span> <span class="o">}</span>
+    <span class="o">.</span><span class="n">keyBy</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">timeWindow</span><span class="o">(</span><span class="nc">Time</span><span class="o">.</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+    <span class="o">.</span><span class="n">sum</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="n">wordCounts</span><span class="o">.</span><span class="n">print</span><span class="o">()</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">execute</span><span class="o">(</span><span class="s">&quot;Word Count Example&quot;</span><span class="o">)</span></code></pre></div>
+
+  </div>
+</div>
+
+<h3 id="section-3">客户端层次</h3>
+
+<p>并行度可以在客户端将job提交到Flink时设定。客户端可以是Java或Scala程序，典型的例子是Flink的命令行接口(CLI).</p>
+
+<p>对于CLI客户端，可以通过-p参数指定并行度。例如：</p>
+
+<div class="highlight"><pre><code>./bin/flink run -p 10 ../examples/*WordCount-java*.jar
+</code></pre></div>
+
+<p>在Java/Scala程序中，并行度可以这样设置：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span>
+    <span class="n">PackagedProgram</span> <span class="n">program</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PackagedProgram</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="n">InetSocketAddress</span> <span class="n">jobManagerAddress</span> <span class="o">=</span> <span class="n">RemoteExecutor</span><span class="o">.</span><span class="na">getInetFromHostport</span><span class="o">(</span><span class="s">&quot;localhost:6123&quot;</span><span class="o">);</span>
+    <span class="n">Configuration</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Configuration</span><span class="o">();</span>
+
+    <span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Client</span><span class="o">(</span><span class="n">jobManagerAddress</span><span class="o">,</span> <span class="n">config</span><span class="o">,</span> <span class="n">program</span><span class="o">.</span><span class="na">getUserCodeClassLoader</span><span class="o">());</span>
+
+    <span class="c1">// set the parallelism to 10 here</span>
+    <span class="n">client</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">program</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ProgramInvocationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">try</span> <span class="o">{</span>
+    <span class="nc">PackagedProgram</span> <span class="n">program</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">PackagedProgram</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="n">args</span><span class="o">)</span>
+    <span class="nc">InetSocketAddress</span> <span class="n">jobManagerAddress</span> <span class="k">=</span> <span class="nc">RemoteExecutor</span><span class="o">.</span><span class="n">getInetFromHostport</span><span class="o">(</span><span class="s">&quot;localhost:6123&quot;</span><span class="o">)</span>
+    <span class="nc">Configuration</span> <span class="n">config</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">()</span>
+
+    <span class="nc">Client</span> <span class="n">client</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="o">(</span><span class="n">jobManagerAddress</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">(),</span> <span class="n">program</span><span class="o">.</span><span class="n">getUserCodeClassLoader</span><span class="o">())</span>
+
+    <span class="c1">// set the parallelism to 10 here</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="o">(</span><span class="n">program</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">Exception</span> <span class="o">=&gt;</span> <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span>
+<span class="o">}</span></code></pre></div>
+
+  </div>
+</div>
+
+<h3 id="section-4">系统层次</h3>
+
+<p>在系统级可以通过设置./conf/flink-conf.yaml<code>文件中的</code>parallelism.default` 属性来指定所有执行环境的默认并行度。
+可以通过查看<a href="/1.2.0/setup/config.html">配置</a>文档以获取更详细的细节。</p>
+
+<h2 id="section-5">设置最大并行度</h2>
+
+<p>最大并行度可以在设置并行度的地方设定(除了客户端和系统层次)。不同于调用<code>setParallelism()</code>方法，
+你可以通过调用<code>setMaxParallelism()</code>方法来设定最大并行度。</p>
+
+<p>默认的最大并行度大概等于‘算子的并行度+算子的并行度/2’，其下限为127而上限为32768。</p>
+
+<p><span class="label label-danger">注意</span> 设置最大并行度到一个非常大的值将会降低性能因为一些状态的后台需要维持内部的数据结构，而这些数据结构将会随着key-groups的数目而扩张（key-groups 是rescalable状态的内部实现机制）。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+
+ <div class="footer">
+  发现错误？想参与编辑？
+  <a href="https://github.com/flink-china/flink-china-doc/edit/1.2.0/dev/parallel.md" target="_blank">
+    在 Github 上编辑此页！
+  </a>
+</div>
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.2.0/page/js/flink.js"></script>
+
+   <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>
